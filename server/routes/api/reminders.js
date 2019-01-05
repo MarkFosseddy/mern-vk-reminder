@@ -5,7 +5,21 @@ const ReminderModel = require('../../models/ReminderModel');
 
 // get all reminders
 router.get('/', (req, res) => {
-	ReminderModel.find().then(reminders => res.json(reminders));
+	ReminderModel.find()
+		.then(reminders =>
+			res.status(200).json(
+				reminders.map(reminder => ({
+					id: reminder.id,
+					text: reminder.text
+				}))
+			)
+		)
+		.catch(() =>
+			res.status(404).json({
+				success: false,
+				message: 'Something went wrong'
+			})
+		);
 });
 
 // add new reminder
