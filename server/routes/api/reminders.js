@@ -1,16 +1,16 @@
 const express = require('express');
 const router = express.Router();
 
-const Reminders = require('../../models/Reminders');
+const ReminderModel = require('../../models/ReminderModel');
 
 // get all reminders
 router.get('/', (req, res) => {
-	Reminders.find().then(reminder => res.json(reminder));
+	ReminderModel.find().then(reminders => res.json(reminders));
 });
 
 // add new reminder
 router.post('/', (req, res) => {
-	const newReminder = new Reminders({ text: req.body.text });
+	const newReminder = new ReminderModel({ text: req.body.text });
 	newReminder
 		.save()
 		.then(() =>
@@ -29,13 +29,13 @@ router.post('/', (req, res) => {
 
 // update reminder
 router.put('/:id', (req, res) => {
-	Reminders.findById(req.params.id)
+	ReminderModel.findById(req.params.id)
 		.then(reminder => {
 			reminder.text = req.body.text;
 			reminder
 				.save()
 				.then(() =>
-					res.status(200).json({
+				    res.status(200).json({
 						success: true,
 						message: 'Reminder successfully updated'
 					})
