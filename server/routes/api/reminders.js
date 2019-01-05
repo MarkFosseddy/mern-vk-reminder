@@ -16,7 +16,7 @@ router.post('/', (req, res) => {
 		.then(() =>
 			res.status(200).json({
 				success: true,
-				message: 'Reminder has been created'
+				message: 'Reminder successfully created'
 			})
 		)
 		.catch(() =>
@@ -35,7 +35,7 @@ router.put('/:id', (req, res) => {
 			reminder
 				.save()
 				.then(() =>
-				    res.status(200).json({
+					res.status(200).json({
 						success: true,
 						message: 'Reminder successfully updated'
 					})
@@ -56,6 +56,25 @@ router.put('/:id', (req, res) => {
 });
 
 // delete reminder
-router.delete('/:id', (req, res) => {});
+router.delete('/:id', (req, res) => {
+	ReminderModel.findById(req.params.id)
+		.then(reminder =>
+			reminder
+				.remove()
+				.then(() =>
+					res.status(200).json({
+						success: true,
+						message: 'Reminder successfully removed'
+					})
+				)
+				.catch(err => console.error(err))
+		)
+		.catch(() =>
+			res.status(404).json({
+				success: false,
+				message: 'Reminder does not exist'
+			})
+		);
+});
 
 module.exports = router;
