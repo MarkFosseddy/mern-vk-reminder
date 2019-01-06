@@ -6,19 +6,20 @@ require('dotenv').config();
 const app = express();
 
 // connect Mongo
+const db = require('./config/database').MongoDB;
 mongoose
 	.connect(
-		process.env.DB,
+		db,
 		{ useNewUrlParser: true }
 	)
 	.then(() => console.log('MongoDB connected...'))
 	.catch(err => console.log(err));
 
-// express body parse middleware
+// express body parser middleware
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// api routes
+// routes
 const reminders = require('./routes/api/reminders');
 const users = require('./routes/users');
 
@@ -27,4 +28,4 @@ app.use('/api/reminders', reminders);
 app.use('/users/', users);
 
 const port = process.env.PORT || 4000;
-app.listen(port, () => console.log('listening to port ' + port));
+app.listen(port, () => console.log(`Listening to port ${port}`));
