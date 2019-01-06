@@ -56,16 +56,12 @@ router.post('/login', (req, res) => {
 					username: user.username,
 					vk: user.vk
 				};
-				jwt.sign(
-                    payload, 
-                    secret, 
-                    { expiresIn: '1h' }, 
-                    (err, token) => 
-                        res.status(200).json({
-                            success: true,
-                            message: 'You are successfully logged in',
-                            token: 'Bearer ' + token
-                        })
+				jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) =>
+					res.status(200).json({
+						success: true,
+						message: 'You are successfully logged in',
+						token: 'Bearer ' + token
+					})
 				);
 			})
 			.catch(() =>
