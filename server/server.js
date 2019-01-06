@@ -16,6 +16,9 @@ mongoose
 	.then(() => console.log('MongoDB connected...'))
 	.catch(err => console.error(err));
 
+// passport config
+require('./config/passport')(passport);
+
 // middleware
 	// express body parser
 app.use(express.urlencoded({ extended: true }));
