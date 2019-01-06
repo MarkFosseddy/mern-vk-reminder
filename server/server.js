@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
 // support .env file
 require('dotenv').config();
 
@@ -15,14 +14,17 @@ mongoose
 	.then(() => console.log('MongoDB connected...'))
 	.catch(err => console.log(err));
 
-// body-parser middleware
-app.use(bodyParser.json());
+// express body parse middleware
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // api routes
 const reminders = require('./routes/api/reminders');
+const users = require('./routes/users');
 
 // use routes
 app.use('/api/reminders', reminders);
+app.use('/users/', users);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log('listening to port ' + port));
