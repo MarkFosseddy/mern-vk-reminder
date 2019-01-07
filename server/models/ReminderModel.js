@@ -5,6 +5,14 @@ const ReminderSchema = new Schema({
 	text: {
 		type: String,
 		required: true
+	},
+	whenToRemind: {
+		type: Date,
+		required: true
+	},
+	isCompleted: {
+		type: Boolean,
+		default: false
 	}
 });
 
