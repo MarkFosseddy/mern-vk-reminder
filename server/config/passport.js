@@ -4,10 +4,9 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require('../models/UserModel');
 const secret = require('./keys').secretOrKey;
 
-const opts = {
-	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-	secretOrKey: secret
-};
+const opts = {};
+opts.jwtFromRequest = ExtractJwt.fromAuthHeaderAsBearerToken();
+opts.secretOrKey = secret;
 
 module.exports = passport =>
 	passport.use(

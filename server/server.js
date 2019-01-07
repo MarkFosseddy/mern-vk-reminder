@@ -1,8 +1,10 @@
+// support .env file
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const passport = require('passport');
-// support .env file
-require('dotenv').config();
+// passport config
+require('./config/passport')(passport);
 
 const app = express();
 
@@ -15,9 +17,6 @@ mongoose
 	)
 	.then(() => console.log('MongoDB connected...'))
 	.catch(err => console.error(err));
-
-// passport config
-require('./config/passport')(passport);
 
 // middleware
 	// express body parser
@@ -32,7 +31,7 @@ const users = require('./routes/api/users');
 
 // use routes
 app.use('/api/reminders', reminders);
-app.use('/api/users/', users);
+app.use('/api/users', users);
 
 const port = process.env.PORT || 4000;
 app.listen(port, () => console.log(`Listening to port ${port}`));
