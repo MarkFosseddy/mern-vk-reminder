@@ -1,51 +1,76 @@
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
 const ReminderModel = require('../../models/ReminderModel');
 
-// get all reminders
-router.get('/', (req, res) => {
-	ReminderModel.find()
-		.then(reminders =>
-			res.status(200).json(
-				reminders.map(reminder => ({
-					id: reminder.id,
-					text: reminder.text
-				}))
+// @route   GET api/reminders/
+// @desc    get reminders
+// @access  Private
+router.get(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		ReminderModel.find({ user_id: req.user.id })
+			.then(reminders =>
+				res.status(200).json(
+					reminders.map(reminder => ({
+						id: reminder.id,
+						text: reminder.text,
+						whenToRemind: reminder.whenToRemind,
+						isCompleted: reminder.isCompleted
+					}))
+				)
 			)
-		)
-		.catch(() =>
-			res.status(404).json({
-				success: false,
-				message: 'Something went wrong'
-			})
-		);
-});
+			.catch(() =>
+				res.status(404).json({
+					success: false,
+					message: 'Something went wrong'
+				})
+			);
+	}
+);
 
-// add new reminder
-router.post('/', (req, res) => {
-	const newReminder = new ReminderModel({ text: req.body.text });
-	newReminder
-		.save()
-		.then(() =>
-			res.status(200).json({
-				success: true,
-				message: 'Reminder successfully created'
-			})
-		)
-		.catch(() =>
-			res.status(400).json({
-				success: false,
-				message: 'Input must not be empty'
-			})
-		);
-});
+// @route   POST api/reminders/
+// @desc    add new reminder
+// @access  Private
+router.post(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+		const newReminder = new ReminderModel({
+			user_id: req.user.id,
+			text: req.body.text,
+			whenToRemind: req.body.whenToRemind
+		});
+		newReminder
+			.save()
+			.then(() =>
+				res.status(200).json({
+					success: true,
+					message: 'Reminder successfully created'
+				})
+			)
+			.catch(() =>
+				res.status(400).json({
+					success: false,
+					message: 'Input must not be empty'
+				})
+			);
+	}
+);
 
-// update reminder
-router.put('/:id', (req, res) => {
-	ReminderModel.findById(req.params.id)
+// @route   PUT api/reminders/:id
+// @desc    update reminder
+// @access  Private
+router.put(
+	'/:id', 
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+	ReminderModel.findOne({ user_id: req.user.id })
 		.then(reminder => {
 			reminder.text = req.body.text;
+			reminder.whenToRemind = req.body.whenToRemind;
 			reminder
 				.save()
 				.then(() =>
@@ -69,9 +94,14 @@ router.put('/:id', (req, res) => {
 		);
 });
 
-// delete reminder
-router.delete('/:id', (req, res) => {
-	ReminderModel.findById(req.params.id)
+// @route   DELETE api/reminders/:id
+// @desc    delete user reminder
+// @access  Private
+router.delete(
+	'/:id', 
+	passport.authenticate('jwt', { session: false }),
+	(req, res) => {
+	ReminderModel.findOne({ user_id: req.user.id })
 		.then(reminder =>
 			reminder
 				.remove()

@@ -2,11 +2,13 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const passport = require('passport');
 
 const UserModel = require('../../models/UserModel');
 const secret = require('../../config/keys').secretOrKey;
 
+// @route   POST api/users/register
+// @desc    register user
+// @access  Public
 router.post('/register', (req, res) => {
 	UserModel.findOne({ username: req.body.username }).then(user => {
 		if (user)
@@ -40,6 +42,9 @@ router.post('/register', (req, res) => {
 	});
 });
 
+// @route   POST api/users/login
+// @desc    login user
+// @access  Public
 router.post('/login', (req, res) => {
 	UserModel.findOne({ username: req.body.username }).then(user => {
 		if (!user)
@@ -56,7 +61,7 @@ router.post('/login', (req, res) => {
 					username: user.username,
 					vk: user.vk
 				};
-				jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) =>
+				jwt.sign(payload, secret, { expiresIn: '10m' }, (err, token) =>
 					res.status(200).json({
 						success: true,
 						message: 'You are successfully logged in',
