@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
 import { loginUser } from '../../actions/authActions';
+import authReducer from '../../reducers/authReducer';
 
 class Login extends Component {
 	state = {
@@ -59,4 +60,8 @@ class Login extends Component {
 	}
 }
 
-export default connect(null, { loginUser })(Login);
+const mapStateToProps = state => ({
+	user: state.auth.user
+});
+
+export default connect(mapStateToProps, { loginUser })(Login);
