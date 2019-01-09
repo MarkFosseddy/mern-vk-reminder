@@ -12,16 +12,8 @@ router.get(
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
 		ReminderModel.find({ user_id: req.user.id })
-			.then(reminders =>
-				res.status(200).json(
-					reminders.map(reminder => ({
-						id: reminder.id,
-						text: reminder.text,
-						whenToRemind: reminder.whenToRemind,
-						isCompleted: reminder.isCompleted
-					}))
-				)
-			)
+			.sort({ date: -1 })
+			.then(reminders => res.status(200).json(reminders))
 			.catch(() =>
 				res.status(404).json({
 					success: false,
@@ -45,12 +37,7 @@ router.post(
 		});
 		newReminder
 			.save()
-			.then(() =>
-				res.status(200).json({
-					success: true,
-					message: 'Reminder successfully created'
-				})
-			)
+			.then(() => res.status(200).json(newReminder))
 			.catch(() =>
 				res.status(400).json({
 					success: false,

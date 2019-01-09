@@ -2,8 +2,8 @@ import React from 'react';
 
 const Footer = () => (
 	<div>
-    <hr />
-		<p>This is footer &copy; 2019</p>
+		<hr />
+		<p className="text-center">This is footer &copy; 2019</p>
 	</div>
 );
 

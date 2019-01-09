@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 
 import { registerUser } from '../../actions/authActions';
 
+import { Button, Form, FormGroup, Input } from 'reactstrap';
+
 class Registration extends Component {
 	state = {
 		username: '',
@@ -34,46 +36,36 @@ class Registration extends Component {
 	};
 	render() {
 		return (
-			<div>
-				<p>Please register an account</p>
-				<form onSubmit={ this.onSubmit }>
-					<div className="form-group">
-						<input 
-							className="form-control"
-							placeholder="Username"
-							name="username"
-							value={ this.state.username }
-							onChange={ this.onChange }
-						/>
-					</div>
-
-					<div className="form-group">
-						<input 
-							className="form-control"
-							placeholder="VK link"
-							name="vk"
-							value={ this.state.vk }
-							onChange={ this.onChange }
+			<Form onSubmit={ this.onSubmit }>
+				<FormGroup>
+					<Input 
+						placeholder="Username"
+						name="username"
+						value={ this.state.username }
+						onChange={ this.onChange }
 					/>
-					</div>
+				</FormGroup>
 
-					<div className="form-group">
-						<input 
-							className="form-control"
-							placeholder="Password"
-							name="password"
-							value={ this.state.password }
-							onChange={ this.onChange }
-						/>
-					</div>
+				<FormGroup>
+					<Input 
+						placeholder="VK link"
+						name="vk"
+						value={ this.state.vk }
+						onChange={ this.onChange }
+				/>
+				</FormGroup>
 
-					<input 
-						className="btn btn-success btn-block mt-4"
-						type="submit" 
-						value="Register"
+				<FormGroup>
+					<Input 
+						placeholder="Password"
+						name="password"
+						value={ this.state.password }
+						onChange={ this.onChange }
 					/>
-				</form>
-			</div>
+				</FormGroup>
+
+				<Button block>Register</Button>
+			</Form>
 		);
 	}
 }
@@ -82,4 +74,6 @@ const mapStateToProps = state => ({
 	error: state.error
 });
 
-export default withRouter(connect(mapStateToProps, { registerUser })(Registration));
+export default withRouter(
+	connect(mapStateToProps, { registerUser })(Registration)
+);

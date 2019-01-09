@@ -9,20 +9,20 @@ const authReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case LOGIN_USER:
 			return {
-                ...state,
-                isAuthenticated: true,
-                user: action.user
-            };
+				...state,
+				isAuthenticated: true,
+				user: action.user
+			};
 
-        case LOGOUT_USER:
-            return {
-                ...state,
-                isAuthenticated: false,
-                user: {}
-            };    
+		case LOGOUT_USER:
+			return {
+				...state,
+				isAuthenticated: false,
+				user: {}
+			};
 
-        default:
-            return state;
+		default:
+			return state;
 	}
 };
 

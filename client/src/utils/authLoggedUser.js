@@ -32,5 +32,5 @@ const logoutUser = () => {
 		type: LOGOUT_USER
 	});
 
-	window.location.href = '/login';
+	window.location.href = '/';
 };

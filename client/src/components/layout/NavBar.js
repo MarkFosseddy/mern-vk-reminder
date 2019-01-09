@@ -5,43 +5,45 @@ import { withRouter } from 'react-router-dom';
 
 import { logoutUser } from '../../actions/authActions';
 
+import { Navbar, Nav, NavItem, Button } from 'reactstrap';
+
 const NavBar = props => {
 	const authNavBar = (
-		<nav className="nav">
-			<Link className="navbar-brand btn btn-link" to="/dashboard">
+		<Navbar>
+			<Link to="/dashboard" className="navbar-brand">
 				VK Reminder
 			</Link>
-			<ul className="nav ml-auto">
-				<li className="nav-item">
-					<button
-						className="btn btn-link"
-						onClick={() => props.logoutUser(props.history)}
+			<Nav className="ml-auto">
+				<NavItem>
+					<Button 
+						onClick={ () => props.logoutUser(props.history) }
+						color="link"
 					>
 						Logout
-					</button>
-				</li>
-			</ul>
-		</nav>
+					</Button>
+				</NavItem>
+			</Nav>
+		</Navbar>
 	);
 
 	const notAuthNavBar = (
-		<nav className="nav">
-			<Link className="navbar-brand btn btn-link" to="/">
+		<Navbar>
+			<Link to="/" className="navbar-brand">
 				VK Reminder
 			</Link>
-			<ul className="nav ml-auto">
-				<li className="nav-item">
-					<Link className="btn btn-link" to="/login">
+			<Nav className="ml-auto">
+				<NavItem>
+					<Link to="/login" className="btn btn-link">
 						Login
 					</Link>
-				</li>
-				<li className="nav-item">
-					<Link className="btn btn-link" to="/register">
+				</NavItem>
+				<NavItem>
+					<Link to="/register" className="btn btn-link">
 						Register
 					</Link>
-				</li>
-			</ul>
-		</nav>
+				</NavItem>
+			</Nav>
+		</Navbar>
 	);
 
 	return (

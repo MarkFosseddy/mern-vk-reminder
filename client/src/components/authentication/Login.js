@@ -4,6 +4,8 @@ import { withRouter } from 'react-router-dom';
 
 import { loginUser } from '../../actions/authActions';
 
+import { Button, Form, FormGroup, Input } from 'reactstrap';
+
 class Login extends Component {
 	state = {
 		username: '',
@@ -32,35 +34,26 @@ class Login extends Component {
 
 	render() {
 		return (
-			<div>
-				<p>Please Log In</p>
-				<form onSubmit={ this.onSubmit }>
-					<div className="form-group">
-						<input 
-							className="form-control"
-							placeholder="Username"
-							name="username"
-							value={ this.state.username }
-							onChange={ this.onChange }
-						/>
-					</div>
-					<div className="form-group">
-						<input 
-							className="form-control"
-							placeholder="Password"
-							name="password"
-							value={ this.state.password }
-							onChange={ this.onChange }
-						/>
-					</div>
-
-					<input 
-						className="btn btn-success btn-block mt-4"
-						type="submit" 
-						value="Log In" 
+			<Form onSubmit={ this.onSubmit }>
+				<FormGroup>
+					<Input 
+						placeholder="Username"
+						name="username"
+						value={ this.state.username }
+						onChange={ this.onChange }
 					/>
-				</form>
-			</div>
+				</FormGroup>
+				<FormGroup>
+					<Input 
+						placeholder="Password"
+						name="password"
+						value={ this.state.password }
+						onChange={ this.onChange }
+					/>
+				</FormGroup>
+
+				<Button block>Login</Button>
+			</Form>
 		);
 	}
 }
@@ -69,4 +62,6 @@ const mapStateToProps = state => ({
 	isAuthenticated: state.auth.isAuthenticated
 });
 
-export default withRouter(connect(mapStateToProps, { loginUser })(Login));
+export default withRouter(
+	connect(mapStateToProps, { loginUser })(Login)
+);
