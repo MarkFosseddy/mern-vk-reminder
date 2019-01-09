@@ -3,41 +3,58 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
+import { logoutUser } from '../../actions/authActions';
+
 const NavBar = props => {
 	const authNavBar = (
-		<ul>
-			<li>
-				<Link to="/dashboard">Home</Link>
-			</li>
-			<li>
-				<Link to="/">Logout</Link>
-			</li>
-		</ul>
+		<nav className="nav">
+			<Link className="navbar-brand btn btn-link" to="/dashboard">
+				VK Reminder
+			</Link>
+			<ul className="nav ml-auto">
+				<li className="nav-item">
+					<button
+						className="btn btn-link"
+						onClick={() => props.logoutUser(props.history)}
+					>
+						Logout
+					</button>
+				</li>
+			</ul>
+		</nav>
 	);
-	
+
 	const notAuthNavBar = (
-		<ul>
-			<li>
-				<Link to="/">Home</Link>
-			</li>
-			<li>
-				<Link to="/register">Register</Link>
-			</li>
-			<li>
-				<Link to="/login">LogIn</Link>
-			</li>
-		</ul>
+		<nav className="nav">
+			<Link className="navbar-brand btn btn-link" to="/">
+				VK Reminder
+			</Link>
+			<ul className="nav ml-auto">
+				<li className="nav-item">
+					<Link className="btn btn-link" to="/login">
+						Login
+					</Link>
+				</li>
+				<li className="nav-item">
+					<Link className="btn btn-link" to="/register">
+						Register
+					</Link>
+				</li>
+			</ul>
+		</nav>
 	);
 
 	return (
-        <div>
-            { props.isAuthenticated ? authNavBar : notAuthNavBar }     
-        </div>
-    );
+		<>
+			{ props.isAuthenticated ? authNavBar : notAuthNavBar }
+		</>
+	);
 };
 
 const mapStateToProps = state => ({
 	isAuthenticated: state.auth.isAuthenticated
 });
 
-export default withRouter(connect(mapStateToProps)(NavBar));
+export default withRouter(
+	connect(mapStateToProps, { logoutUser })(NavBar)
+);

@@ -11,12 +11,13 @@ const secret = require('../../config/keys').secretOrKey;
 // @access  Public
 router.post('/register', (req, res) => {
 	UserModel.findOne({ username: req.body.username }).then(user => {            
-		if (user)
+		if (user) {
 			return res.status(400).json({
 				success: false,
 				message: 'This username is already taken'
 			});
-
+		}
+		
 		const newUser = new UserModel({
 			username: req.body.username,
 			password: req.body.password,
@@ -66,11 +67,11 @@ router.post('/login', (req, res) => {
 					username: user.username,
 					vk: user.vk
 				};
-				jwt.sign(payload, secret, { expiresIn: '10m' }, (err, token) =>
+				jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) =>
 					res.status(200).json({
 						success: true,
 						message: 'You are successfully logged in',
-						token: 'Bearer ' + token
+						jwtToken: 'Bearer ' + token
 					})
 				);
 			})

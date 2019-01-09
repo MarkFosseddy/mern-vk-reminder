@@ -19,10 +19,8 @@ mongoose
 	.catch(err => console.error(err));
 
 // middleware
-	// express body parser
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-	// passport
 app.use(passport.initialize());
 
 // routes

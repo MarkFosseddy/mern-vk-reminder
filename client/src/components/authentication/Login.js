@@ -35,25 +35,30 @@ class Login extends Component {
 			<div>
 				<p>Please Log In</p>
 				<form onSubmit={ this.onSubmit }>
-					<div>Username</div>
-					<input 
-						placeholder="Username"
-						name="username"
-						value={ this.state.username }
-						onChange={ this.onChange }
-					/>
-
-					<div>Password</div>
-					<input 
-						placeholder="Password"
-						name="password"
-						value={ this.state.password }
-						onChange={ this.onChange }
-					/>
-
-					<div>
-						<input type="submit" value="Log In" />
+					<div className="form-group">
+						<input 
+							className="form-control"
+							placeholder="Username"
+							name="username"
+							value={ this.state.username }
+							onChange={ this.onChange }
+						/>
 					</div>
+					<div className="form-group">
+						<input 
+							className="form-control"
+							placeholder="Password"
+							name="password"
+							value={ this.state.password }
+							onChange={ this.onChange }
+						/>
+					</div>
+
+					<input 
+						className="btn btn-success btn-block mt-4"
+						type="submit" 
+						value="Log In" 
+					/>
 				</form>
 			</div>
 		);

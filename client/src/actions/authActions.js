@@ -2,7 +2,7 @@ import axios from 'axios';
 import jwt_decode from 'jwt-decode';
 
 import { LOGIN_USER, LOGOUT_USER, GET_ERRORS } from './types';
-import { setAuthToken, unsetAuthToken } from '../utils/authToken';
+import { setJwtToken, unsetJwtToken } from '../utils/jwtToken';
 
 export const registerUser = (newUser, pageRedirect) => dispatch => {
 	axios
@@ -20,12 +20,12 @@ export const loginUser = (credential, pageRedirect) => dispatch => {
 	axios
 		.post('api/users/login', credential)
 		.then(res => {
-			const { token } = res.data;
-			localStorage.setItem('jwtToken', token);
+			const { jwtToken } = res.data;
+			localStorage.setItem('jwtToken', jwtToken);
 
-			setAuthToken(token);
+			setJwtToken(jwtToken);
 
-			const userData = jwt_decode(token);
+			const userData = jwt_decode(jwtToken);
 			dispatch({
 				type: LOGIN_USER,
 				user: userData
@@ -39,7 +39,7 @@ export const loginUser = (credential, pageRedirect) => dispatch => {
 export const logoutUser = pageRedirect => dispatch => {
 	localStorage.removeItem('jwtToken');
 
-	unsetAuthToken();
+	unsetJwtToken();
 
 	dispatch({
 		type: LOGOUT_USER

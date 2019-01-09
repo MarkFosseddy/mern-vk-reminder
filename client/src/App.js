@@ -9,16 +9,22 @@ import Register from './components/authentication/Registration';
 import Login from './components/authentication/Login';
 import Dashboard from './components/dashboard/Dashboard';
 
+import { authLoggedUser } from './utils/authLoggedUser';
+
 import store from './store';
 
 import './App.css';
+
+if (localStorage.jwtToken) {
+	authLoggedUser(localStorage.jwtToken);
+}
 
 class App extends Component {
 	render() {
 		return (
 			<Provider store={ store }>
 				<Router>
-					<div>
+					<div className="container">
 						<NavBar />
 						<Route exact path="/" component={ Landing } />
 						<Route path="/register" component={ Register } />

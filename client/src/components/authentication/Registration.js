@@ -37,31 +37,41 @@ class Registration extends Component {
 			<div>
 				<p>Please register an account</p>
 				<form onSubmit={ this.onSubmit }>
-					<div>Username</div>
-					<input 
-						placeholder="Username"
-						name="username"
-						value={ this.state.username }
-						onChange={ this.onChange }
-					/>
+					<div className="form-group">
+						<input 
+							className="form-control"
+							placeholder="Username"
+							name="username"
+							value={ this.state.username }
+							onChange={ this.onChange }
+						/>
+					</div>
 
-					<div>VK link</div>
-					<input 
-						placeholder="VK link"
-						name="vk"
-						value={ this.state.vk }
-						onChange={ this.onChange }
+					<div className="form-group">
+						<input 
+							className="form-control"
+							placeholder="VK link"
+							name="vk"
+							value={ this.state.vk }
+							onChange={ this.onChange }
 					/>
+					</div>
 
-					<div>Password</div>
+					<div className="form-group">
+						<input 
+							className="form-control"
+							placeholder="Password"
+							name="password"
+							value={ this.state.password }
+							onChange={ this.onChange }
+						/>
+					</div>
+
 					<input 
-						placeholder="Password"
-						name="password"
-						value={ this.state.password }
-						onChange={ this.onChange }
+						className="btn btn-success btn-block mt-4"
+						type="submit" 
+						value="Register"
 					/>
-
-					<input type="submit" value="Register" />
 				</form>
 			</div>
 		);
