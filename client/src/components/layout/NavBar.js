@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 const NavBar = props => {
 	const authNavBar = (
@@ -12,6 +14,7 @@ const NavBar = props => {
 			</li>
 		</ul>
 	);
+	
 	const notAuthNavBar = (
 		<ul>
 			<li>
@@ -25,11 +28,16 @@ const NavBar = props => {
 			</li>
 		</ul>
 	);
+
 	return (
         <div>
-            { props.user ? authNavBar : notAuthNavBar }
+            { props.isAuthenticated ? authNavBar : notAuthNavBar }     
         </div>
     );
 };
 
-export default NavBar;
+const mapStateToProps = state => ({
+	isAuthenticated: state.auth.isAuthenticated
+});
+
+export default withRouter(connect(mapStateToProps)(NavBar));

@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 
 import { loginUser } from '../../actions/authActions';
-import authReducer from '../../reducers/authReducer';
 
 class Login extends Component {
 	state = {
@@ -12,7 +12,7 @@ class Login extends Component {
 
 	onChange = event => {
 		this.setState({ [event.target.name]: event.target.value });
-	};
+	}
 
 	onSubmit = event => {
 		event.preventDefault();
@@ -27,8 +27,8 @@ class Login extends Component {
 			password: ''
 		});
 		
-		this.props.loginUser(userData);
-	};
+		this.props.loginUser(userData, this.props.history);
+	}
 
 	render() {
 		return (
@@ -61,7 +61,7 @@ class Login extends Component {
 }
 
 const mapStateToProps = state => ({
-	user: state.auth.user
+	isAuthenticated: state.auth.isAuthenticated
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default withRouter(connect(mapStateToProps, { loginUser })(Login));

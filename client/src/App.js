@@ -7,7 +7,7 @@ import NavBar from './components/layout/NavBar';
 import Landing from './components/layout/Landing';
 import Register from './components/authentication/Registration';
 import Login from './components/authentication/Login';
-import Dashboard from './components/Dashboard';
+import Dashboard from './components/dashboard/Dashboard';
 
 import store from './store';
 

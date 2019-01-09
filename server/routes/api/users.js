@@ -4,13 +4,13 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const UserModel = require('../../models/UserModel');
-const secret = require('../../config/keys').secretOrKey;
+const secret = require('../../config/keys').secretOrKey;                        
 
 // @route   POST api/users/register
 // @desc    register user
 // @access  Public
 router.post('/register', (req, res) => {
-	UserModel.findOne({ username: req.body.username }).then(user => {
+	UserModel.findOne({ username: req.body.username }).then(user => {            
 		if (user)
 			return res.status(400).json({
 				success: false,
@@ -36,7 +36,12 @@ router.post('/register', (req, res) => {
 							message: 'User successfully registred'
 						})
 					)
-					.catch(err => console.error(err));
+					.catch(() =>
+						res.status(400).json({
+							success: false,
+							message: 'Please fill all fields'
+						})
+					);
 			});
 		});
 	});

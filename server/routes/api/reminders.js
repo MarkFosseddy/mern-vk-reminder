@@ -64,61 +64,63 @@ router.post(
 // @desc    update reminder
 // @access  Private
 router.put(
-	'/:id', 
+	'/:id',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
-	ReminderModel.findOne({ user_id: req.user.id })
-		.then(reminder => {
-			reminder.text = req.body.text;
-			reminder.whenToRemind = req.body.whenToRemind;
-			reminder
-				.save()
-				.then(() =>
-					res.status(200).json({
-						success: true,
-						message: 'Reminder successfully updated'
-					})
-				)
-				.catch(() =>
-					res.status(400).json({
-						success: false,
-						message: 'Input must not be empty'
-					})
-				);
-		})
-		.catch(() =>
-			res.status(404).json({
-				success: false,
-				message: 'Reminder does not exist'
+		ReminderModel.findOne({ user_id: req.user.id })
+			.then(reminder => {
+				reminder.text = req.body.text;
+				reminder.whenToRemind = req.body.whenToRemind;
+				reminder
+					.save()
+					.then(() =>
+						res.status(200).json({
+							success: true,
+							message: 'Reminder successfully updated'
+						})
+					)
+					.catch(() =>
+						res.status(400).json({
+							success: false,
+							message: 'Input must not be empty'
+						})
+					);
 			})
-		);
-});
+			.catch(() =>
+				res.status(404).json({
+					success: false,
+					message: 'Reminder does not exist'
+				})
+			);
+	}
+);
 
 // @route   DELETE api/reminders/:id
 // @desc    delete user reminder
 // @access  Private
 router.delete(
-	'/:id', 
+	'/:id',
 	passport.authenticate('jwt', { session: false }),
 	(req, res) => {
-	ReminderModel.findOne({ user_id: req.user.id })
-		.then(reminder =>
-			reminder
-				.remove()
-				.then(() =>
-					res.status(200).json({
-						success: true,
-						message: 'Reminder successfully removed'
-					})
-				)
-				.catch(err => console.error(err))
-		)
-		.catch(() =>
-			res.status(404).json({
-				success: false,
-				message: 'Reminder does not exist'
-			})
-		);
-});
+		ReminderModel.findOne({ user_id: req.user.id })
+			.then(reminder =>
+				reminder
+					.remove()
+					.then(() =>
+						res.status(200).json({
+							success: true,
+							message: 'Reminder successfully removed'
+						})
+					)
+					.catch(err => console.error(err))
+			)
+			.catch(() =>
+				res.status(404).json({
+					success: false,
+					message: 'Reminder does not exist'
+				})
+			);
+	}
+);
 
 module.exports = router;
