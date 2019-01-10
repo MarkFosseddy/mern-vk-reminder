@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
@@ -9,33 +9,30 @@ import Register from './components/authentication/Registration';
 import Login from './components/authentication/Login';
 import Dashboard from './components/dashboard/Dashboard';
 
-import { authLoggedUser } from './utils/authLoggedUser';
+import authLoggedUser from './utils/authLoggedUser';
 
 import store from './store';
 
 import './App.css';
 
 if (localStorage.jwtToken) {
-	authLoggedUser(localStorage.jwtToken);
+  authLoggedUser(localStorage.jwtToken);
 }
 
-class App extends Component {
-	render() {
-		return (
-			<Provider store={ store }>
-				<Router>
-					<div className="container">
-						<NavBar />
-						<Route exact path="/" component={ Landing } />
-						<Route path="/register" component={ Register } />
-						<Route path="/login" component={ Login } />
-						<Route path="/dashboard" component={ Dashboard } />
-						<Footer />
-					</div>
-				</Router>
-			</Provider>
-		);
-	}
-}
+const App = () => (
+  <Provider store={store}>
+    <Router>
+      <div className="container">
+        <NavBar />
+        <Route exact path="/" component={Landing} />
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
+        <Route path="/dashboard" component={Dashboard} />
+        <Footer />
+      </div>
+    </Router>
+  </Provider>
+);
+
 
 export default App;
