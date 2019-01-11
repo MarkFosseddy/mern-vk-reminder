@@ -16,25 +16,25 @@ import authLoggedUser from './utils/authLoggedUser';
 import store from './store';
 
 if (localStorage.jwtToken) {
-	authLoggedUser(localStorage.jwtToken);
+  authLoggedUser(localStorage.jwtToken);
 }
 
 const App = () => (
-	<Provider store={store}>
-		<Router>
-			<div className="container">
-				<NavBar />
-				<Switch>
-					<Route exact path="/" component={Landing} />
-					<Route exact path="/register" component={Register} />
-					<Route exact path="/login" component={Login} />
-					<PrivateRoute exact path="/dashboard" component={Dashboard} />
-					<Route component={NotFound} />
-				</Switch>
-				<Footer />
-			</div>
-		</Router>
-	</Provider>
+  <Provider store={store}>
+    <Router>
+      <div className="container">
+        <NavBar />
+        <Switch>
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+          <Route exact path="/login" component={Login} />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </div>
+    </Router>
+  </Provider>
 );
 
 export default App;
