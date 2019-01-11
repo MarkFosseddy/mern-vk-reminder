@@ -11,12 +11,12 @@ const app = express();
 // connect Mongo
 const db = require('./config/keys').MongoDB;
 mongoose
-	.connect(
-		db,
-		{ useNewUrlParser: true }
-	)
-	.then(() => console.log('MongoDB connected...'))
-	.catch(err => console.error(err));
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
+  .then(() => console.log('MongoDB connected...'))
+  .catch(err => console.error(err));
 
 // middleware
 app.use(express.urlencoded({ extended: true }));

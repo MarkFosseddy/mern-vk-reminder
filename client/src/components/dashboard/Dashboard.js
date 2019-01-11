@@ -9,29 +9,29 @@ import AddReminderModal from './AddReminderModal';
 
 
 class Dashboard extends Component {
-	componentWillMount() {
-		this.props.getReminders();
-	}
+  componentWillMount() {
+    this.props.getReminders();
+  }
 
-	render() {
-		const { user, reminders } = this.props;
-		return (
-			<div>
-				<h1 className="text-center mb-5">
-					Hello, {user.username}
-				</h1>
-				<AddReminderModal />
-				<ReminderList reminders={reminders} />
-			</div>
-		);
-	}
+  render() {
+    const { user, reminders } = this.props;
+    return (
+      <div>
+        <h1 className="text-center mb-5">
+          Hello, {user.username}
+        </h1>
+        <AddReminderModal />
+        <ReminderList reminders={reminders} />
+      </div>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-	user: state.auth.user,
-	reminders: state.reminder.reminders,
+  user: state.auth.user,
+  reminders: state.reminder.reminders,
 });
 
 export default withRouter(
-	connect(mapStateToProps, { getReminders })(Dashboard),
+  connect(mapStateToProps, { getReminders })(Dashboard),
 );

@@ -10,79 +10,79 @@ const secret = require('../../config/keys').secretOrKey;
 // @desc    register user
 // @access  Public
 router.post('/register', (req, res) => {
-	UserModel.findOne({ username: req.body.username }).then(user => {
-		if (user) {
-			return res.status(400).json({
-				success: false,
-				message: 'This username is already taken'
-			});
-		}
+  UserModel.findOne({ username: req.body.username }).then(user => {
+    if (user) {
+      return res.status(400).json({
+        success: false,
+        message: 'This username is already taken'
+      });
+    }
 
-		const newUser = new UserModel({
-			username: req.body.username,
-			password: req.body.password,
-			vk: req.body.vk
-		});
+    const newUser = new UserModel({
+      username: req.body.username,
+      password: req.body.password,
+      vk: req.body.vk
+    });
 
-		bcrypt.genSalt(10, (err, salt) => {
-			if (err) throw err;
-			bcrypt.hash(newUser.password, salt, (err, hash) => {
-				if (err) throw err;
-				newUser.password = hash;
-				newUser
-					.save()
-					.then(() =>
-						res.status(200).json({
-							success: true,
-							message: 'User successfully registred'
-						})
-					)
-					.catch(() =>
-						res.status(400).json({
-							success: false,
-							message: 'Please fill all fields'
-						})
-					);
-			});
-		});
-	});
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) throw err;
+      bcrypt.hash(newUser.password, salt, (err, hash) => {
+        if (err) throw err;
+        newUser.password = hash;
+        newUser
+          .save()
+          .then(() =>
+            res.status(200).json({
+              success: true,
+              message: 'User successfully registred'
+            })
+          )
+          .catch(() =>
+            res.status(400).json({
+              success: false,
+              message: 'Please fill all fields'
+            })
+          );
+      });
+    });
+  });
 });
 
 // @route   POST api/users/login
 // @desc    login user
 // @access  Public
 router.post('/login', (req, res) => {
-	UserModel.findOne({ username: req.body.username }).then(user => {
-		if (!user) {
-			return res.status(400).json({
-				success: false,
-				message: 'User does not exist'
-			});
-		}
+  UserModel.findOne({ username: req.body.username }).then(user => {
+    if (!user) {
+      return res.status(400).json({
+        success: false,
+        message: 'User does not exist'
+      });
+    }
 
-		bcrypt
-			.compare(req.body.password, user.password)
-			.then(() => {
-				const payload = {
-					id: user.id,
-					username: user.username,
-					vk: user.vk
-				};
-				jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) =>
-					res.status(200).json({
-						success: true,
-						message: 'You are successfully logged in',
-						jwtToken: `Bearer ${token}`
-					})
-				);
-			})
-			.catch(() =>
-				res.status(400).json({
-					success: false,
-					message: 'Incorrect password'
-				})
-			);
-	});
+    bcrypt
+      .compare(req.body.password, user.password)
+      .then(() => {
+        const payload = {
+          id: user.id,
+          username: user.username,
+          vk: user.vk
+        };
+        jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) =>
+          res.status(200).json({
+            success: true,
+            message: 'You are successfully logged in',
+            jwtToken: `Bearer ${token}`
+          })
+        );
+      })
+      .catch(() =>
+        res.status(400).json({
+          success: false,
+          message: 'Incorrect password'
+        })
+      );
+  });
 });
 
 module.exports = router;

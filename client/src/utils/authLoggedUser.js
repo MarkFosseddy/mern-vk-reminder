@@ -5,34 +5,34 @@ import { setJwtToken, unsetJwtToken } from './jwtToken';
 import store from '../store';
 
 const loginUser = (userData, jwtToken) => {
-	store.dispatch({
-		type: LOGIN_USER,
-		user: userData
-	});
+  store.dispatch({
+    type: LOGIN_USER,
+    user: userData
+  });
 
-	setJwtToken(jwtToken);
+  setJwtToken(jwtToken);
 };
 
 const logoutUser = () => {
-	localStorage.removeItem('jwtToken');
-	unsetJwtToken();
+  localStorage.removeItem('jwtToken');
+  unsetJwtToken();
 
-	store.dispatch({
-		type: LOGOUT_USER
-	});
+  store.dispatch({
+    type: LOGOUT_USER
+  });
 
-	window.location.href = '/';
+  window.location.href = '/';
 };
 
 const authLoggedUser = jwtToken => {
-	const userData = jwtDecode(jwtToken);
+  const userData = jwtDecode(jwtToken);
 
-	const jwtTokenExpireTime = userData.exp;
-	const currentTime = Date.now() / 1000;
+  const jwtTokenExpireTime = userData.exp;
+  const currentTime = Date.now() / 1000;
 
-	return currentTime < jwtTokenExpireTime
-		? loginUser(userData, jwtToken)
-		: logoutUser();
+  return currentTime < jwtTokenExpireTime
+    ? loginUser(userData, jwtToken)
+    : logoutUser();
 };
 
 export default authLoggedUser;
