@@ -1,9 +1,9 @@
 import React from 'react';
 
 const Footer = () => (
-  <div>
+  <div className="fixed-bottom">
     <hr />
-    <p className="text-center">This is footer &copy; 2019</p>
+    <p className="text-center">VK Reminder &copy; 2019</p>
   </div>
 );
 

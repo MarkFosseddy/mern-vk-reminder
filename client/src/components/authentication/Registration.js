@@ -64,7 +64,7 @@ class Registration extends Component {
 					/>
 				</FormGroup>
 
-				<Button block>Register</Button>
+				<Button color="primary" block>Register</Button>
 			</Form>
 		);
 	}

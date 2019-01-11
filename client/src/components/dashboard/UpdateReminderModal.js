@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-
-import { addReminder } from '../../actions/reminderActions';
 
 import { 
 	Button, 
@@ -14,12 +11,19 @@ import {
 } from 'reactstrap';
 
 
-class ReminderModal extends Component {
+class UpdateReminderModal extends Component {
 	state = {
 		modal: false,
 		text: '',
 		whenToRemind: ''
 	};
+
+  componentWillMount() {
+    this.setState({
+      text: this.props.text,
+      whenToRemind: this.props.whenToRemind
+    });
+  }
 
 	toggle = () => {
 		this.setState({ modal: !this.state.modal });
@@ -32,17 +36,12 @@ class ReminderModal extends Component {
 	onSubmit = event => {
 		event.preventDefault();
 
-		const newReminder = {
+		const updatedReminder = {
 			text: this.state.text,
 			whenToRemind: this.state.whenToRemind
 		};
-		
-		this.setState({
-			text: '',
-			whenToRemind: ''
-		});
-
-		this.props.addReminder(newReminder);
+    
+    this.props.updateReminder(this.props.id, updatedReminder);
 
 		this.toggle();
 	}
@@ -50,14 +49,14 @@ class ReminderModal extends Component {
 	render() {
 		return (
 			<div>
-				<Button onClick={ this.toggle }>
-					Add Reminder
+				<Button onClick={ this.toggle } color="primary">
+					Update
 				</Button>
 				<Modal
 					isOpen={ this.state.modal }
 					toggle={ this.toggle }
 				>
-					<ModalHeader toggle={ this.toggle }>Add Reminder</ModalHeader>
+					<ModalHeader toggle={ this.toggle }>Update Reminder</ModalHeader>
 
 					<ModalBody>
 						<Form onSubmit={ this.onSubmit }>
@@ -77,7 +76,7 @@ class ReminderModal extends Component {
 									onChange={ this.onChange }
 								/>
 							</FormGroup>
-							<Button block>Add New Reminder</Button>
+							<Button block>Update Reminder</Button>
 						</Form>
 					</ModalBody>
 				</Modal>
@@ -86,5 +85,4 @@ class ReminderModal extends Component {
 	}
 }
 
-
-export default connect(null, { addReminder })(ReminderModal);
+export default UpdateReminderModal;

@@ -2,17 +2,19 @@ import React from 'react';
 
 import ReminderItem from './ReminderItem';
 
+import { ListGroup } from 'reactstrap';
+
 const ReminderList = ({ reminders }) => (
-  <ul>
+  <ListGroup>
     {
       reminders.map(reminder => (
         <ReminderItem
-          key={reminder._id}
-          reminder={reminder}
+          key={ reminder._id }
+          reminder={ reminder }
         />
       ))
     }
-  </ul>
+  </ListGroup>
 );
 
 export default ReminderList;

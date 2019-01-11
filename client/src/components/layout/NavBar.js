@@ -11,19 +11,22 @@ import { logoutUser } from '../../actions/authActions';
 
 const NavBar = (props) => {
   const authNavBar = (
-    <Navbar>
+    <Navbar className="mb-5">
       <Link to="/dashboard" className="navbar-brand">
         VK Reminder
-
       </Link>
       <Nav className="ml-auto">
+        <NavItem>
+          <Link to="/dashboard" className="btn btn-link">
+            Dashboard
+          </Link>
+        </NavItem>
         <NavItem>
           <Button
             onClick={() => props.logoutUser(props.history)}
             color="link"
           >
             Logout
-
           </Button>
         </NavItem>
       </Nav>
@@ -31,22 +34,19 @@ const NavBar = (props) => {
   );
 
   const notAuthNavBar = (
-    <Navbar>
+    <Navbar className="mb-5">
       <Link to="/" className="navbar-brand">
         VK Reminder
-
       </Link>
       <Nav className="ml-auto">
         <NavItem>
           <Link to="/login" className="btn btn-link">
             Login
-
           </Link>
         </NavItem>
         <NavItem>
           <Link to="/register" className="btn btn-link">
             Register
-
           </Link>
         </NavItem>
       </Nav>

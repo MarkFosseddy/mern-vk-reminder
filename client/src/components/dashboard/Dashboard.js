@@ -5,7 +5,7 @@ import { withRouter } from 'react-router-dom';
 import { getReminders } from '../../actions/reminderActions';
 
 import ReminderList from './ReminderList';
-import ReminderModal from './ReminderModal';
+import AddReminderModal from './AddReminderModal';
 
 
 class Dashboard extends Component {
@@ -17,12 +17,11 @@ class Dashboard extends Component {
     const { user, reminders } = this.props;
     return (
       <div>
-        <h1 className="text-center">
-          Hello,
-          { user.username }
+        <h1 className="text-center mb-5">
+          Hello, { user.username }
         </h1>
-        <ReminderModal />
-        <ReminderList reminders={reminders} />
+        <AddReminderModal />
+        <ReminderList reminders={ reminders } />
       </div>
     );
   }
