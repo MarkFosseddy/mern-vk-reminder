@@ -36,7 +36,7 @@ class AddReminderModal extends Component {
 			text: this.state.text,
 			whenToRemind: this.state.whenToRemind
 		};
-		
+
 		this.setState({
 			text: '',
 			whenToRemind: ''

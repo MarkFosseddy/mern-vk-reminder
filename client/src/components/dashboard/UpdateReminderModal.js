@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import { 
-	Button, 
-	Modal, 
-	ModalHeader, 
-	ModalBody, 
-	Form, 
-	FormGroup, 
+import {
+	Button,
+	Modal,
+	ModalHeader,
+	ModalBody,
+	Form,
+	FormGroup,
 	Input
 } from 'reactstrap';
 
@@ -18,19 +18,19 @@ class UpdateReminderModal extends Component {
 		whenToRemind: ''
 	};
 
-  componentWillMount() {
-    this.setState({
-      text: this.props.text,
-      whenToRemind: this.props.whenToRemind
-    });
-  }
+	componentWillMount() {
+		this.setState({
+			text: this.props.text,
+			whenToRemind: this.props.whenToRemind
+		});
+	}
 
 	toggle = () => {
 		this.setState({ modal: !this.state.modal });
 	}
 
 	onChange = event => {
-		this.setState({ [event.target.name]: event.target.value });
+		this.setState({ [ event.target.name ]: event.target.value });
 	}
 
 	onSubmit = event => {
@@ -40,8 +40,8 @@ class UpdateReminderModal extends Component {
 			text: this.state.text,
 			whenToRemind: this.state.whenToRemind
 		};
-    
-    this.props.updateReminder(this.props.id, updatedReminder);
+
+		this.props.updateReminder(this.props.id, updatedReminder);
 
 		this.toggle();
 	}
@@ -49,31 +49,31 @@ class UpdateReminderModal extends Component {
 	render() {
 		return (
 			<div>
-				<Button onClick={ this.toggle } color="primary">
+				<Button onClick={this.toggle} color="primary">
 					Update
 				</Button>
 				<Modal
-					isOpen={ this.state.modal }
-					toggle={ this.toggle }
+					isOpen={this.state.modal}
+					toggle={this.toggle}
 				>
-					<ModalHeader toggle={ this.toggle }>Update Reminder</ModalHeader>
+					<ModalHeader toggle={this.toggle}>Update Reminder</ModalHeader>
 
 					<ModalBody>
-						<Form onSubmit={ this.onSubmit }>
+						<Form onSubmit={this.onSubmit}>
 							<FormGroup>
 								<Input
 									placeholder="Text"
 									name="text"
-									value={ this.state.text }	
-									onChange={ this.onChange }
+									value={this.state.text}
+									onChange={this.onChange}
 								/>
 							</FormGroup>
 							<FormGroup>
 								<Input
 									placeholder="whenToRemind"
 									name="whenToRemind"
-									value={ this.state.whenToRemind }	
-									onChange={ this.onChange }
+									value={this.state.whenToRemind}
+									onChange={this.onChange}
 								/>
 							</FormGroup>
 							<Button block>Update Reminder</Button>

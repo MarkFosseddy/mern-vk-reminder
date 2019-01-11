@@ -14,7 +14,7 @@ class Registration extends Component {
 	};
 
 	onChange = event => {
-		this.setState({ [event.target.name]: event.target.value });
+		this.setState({ [ event.target.name ]: event.target.value });
 	};
 
 	onSubmit = event => {
@@ -36,31 +36,31 @@ class Registration extends Component {
 	};
 	render() {
 		return (
-			<Form onSubmit={ this.onSubmit }>
+			<Form onSubmit={this.onSubmit}>
 				<FormGroup>
-					<Input 
+					<Input
 						placeholder="Username"
 						name="username"
-						value={ this.state.username }
-						onChange={ this.onChange }
+						value={this.state.username}
+						onChange={this.onChange}
 					/>
 				</FormGroup>
 
 				<FormGroup>
-					<Input 
+					<Input
 						placeholder="VK link"
 						name="vk"
-						value={ this.state.vk }
-						onChange={ this.onChange }
-				/>
+						value={this.state.vk}
+						onChange={this.onChange}
+					/>
 				</FormGroup>
 
 				<FormGroup>
-					<Input 
+					<Input
 						placeholder="Password"
 						name="password"
-						value={ this.state.password }
-						onChange={ this.onChange }
+						value={this.state.password}
+						onChange={this.onChange}
 					/>
 				</FormGroup>
 
