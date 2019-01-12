@@ -9,10 +9,10 @@ require('./config/passport')(passport);
 const app = express();
 
 // connect Mongo
-const db = require('./config/keys').MongoDB;
+const mongoDB = require('./config/keys').MongoDB;
 mongoose
   .connect(
-    db,
+    mongoDB,
     { useNewUrlParser: true }
   )
   .then(() => console.log('MongoDB connected...'))
