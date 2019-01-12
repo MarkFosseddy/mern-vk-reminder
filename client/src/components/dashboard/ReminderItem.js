@@ -1,20 +1,28 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { deleteReminder, updateReminder } from '../../actions/reminderActions';
+import { deleteReminder } from '../../actions/reminderActions';
+import makeDateUserFriendly from '../../utils/makeDateUserFriendly';
 
-import UpdateReminderModal from './UpdateReminderModal';
+import ReminderModal from './modal/ReminderModal';
 
-import { Button, ButtonGroup, ListGroupItem, Container, Row, Col } from 'reactstrap';
+import { 
+  Button, 
+  ButtonGroup, 
+  ListGroupItem, 
+  Container, 
+  Row, 
+  Col 
+} from 'reactstrap';
 
-const ReminderItem = ({ reminder, deleteReminder, updateReminder }) => (
+const ReminderItem = ({ reminder, deleteReminder }) => (
   <ListGroupItem>
     <Container>
       <Row>
         <Col>
           {reminder.text}
           <br />
-          <small>{reminder.whenToRemind}</small>
+          <small>{makeDateUserFriendly(reminder.whenToRemind)}</small>
         </Col>
         <Col xs="auto">
           <ButtonGroup vertical>
@@ -23,12 +31,11 @@ const ReminderItem = ({ reminder, deleteReminder, updateReminder }) => (
               color="danger"
             >
               X
-						</Button>
-            <UpdateReminderModal
+            </Button>
+            <ReminderModal
               text={reminder.text}
               whenToRemind={reminder.whenToRemind}
               id={reminder._id}
-              updateReminder={updateReminder}
             />
           </ButtonGroup>
         </Col>
@@ -37,4 +44,4 @@ const ReminderItem = ({ reminder, deleteReminder, updateReminder }) => (
   </ListGroupItem>
 );
 
-export default connect(null, { deleteReminder, updateReminder })(ReminderItem);
+export default connect(null, { deleteReminder })(ReminderItem);

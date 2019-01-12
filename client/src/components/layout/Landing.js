@@ -7,17 +7,14 @@ const Landing = () => (
     <p className="text-center mb-5">
       Online service to create reminders. And they will be sent right into
       your VK messages.
-
     </p>
 
     <div className="pt-5">
       <Link to="/register" className="btn btn-primary btn-block">
         Register
-
       </Link>
       <Link to="/login" className="btn btn-success btn-block m-0">
         Login
-
       </Link>
     </div>
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { registerUser } from '../../actions/authActions';
 
@@ -74,6 +73,4 @@ const mapStateToProps = state => ({
   error: state.error
 });
 
-export default withRouter(
-  connect(mapStateToProps, { registerUser })(Registration)
-);
+export default connect(mapStateToProps, { registerUser })(Registration);

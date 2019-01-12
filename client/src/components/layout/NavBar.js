@@ -3,13 +3,11 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import {
-  Navbar, Nav, NavItem, Button,
-} from 'reactstrap';
 import { logoutUser } from '../../actions/authActions';
 
+import { Navbar, Nav, NavItem, Button } from 'reactstrap';
 
-const NavBar = (props) => {
+const NavBar = ({ isAuthenticated, logoutUser, history }) => {
   const authNavBar = (
     <Navbar className="mb-5">
       <Link to="/dashboard" className="navbar-brand">
@@ -23,7 +21,7 @@ const NavBar = (props) => {
         </NavItem>
         <NavItem>
           <Button
-            onClick={() => props.logoutUser(props.history)}
+            onClick={() => logoutUser(history)}
             color="link"
           >
             Logout
@@ -55,7 +53,7 @@ const NavBar = (props) => {
 
   return (
     <>
-      {props.isAuthenticated ? authNavBar : notAuthNavBar}
+      {isAuthenticated ? authNavBar : notAuthNavBar}
     </>
   );
 };
@@ -65,5 +63,5 @@ const mapStateToProps = state => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { logoutUser })(NavBar),
+  connect(mapStateToProps, { logoutUser })(NavBar)
 );

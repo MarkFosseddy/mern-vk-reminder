@@ -7,7 +7,7 @@ import {
   UPDATE_REMINDER
 } from './types';
 
-export const getReminders = () => (dispatch) => {
+export const getReminders = () => dispatch => {
   axios
     .get('api/reminders')
     .then(res => dispatch({
@@ -17,7 +17,7 @@ export const getReminders = () => (dispatch) => {
     .catch(err => console.log(err));
 };
 
-export const addReminder = newReminder => (dispatch) => {
+export const addReminder = newReminder => dispatch => {
   axios
     .post('/api/reminders', newReminder)
     .then(res => dispatch({

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
 
 import { loginUser } from '../../actions/authActions';
 
@@ -62,6 +61,5 @@ const mapStateToProps = state => ({
   isAuthenticated: state.auth.isAuthenticated
 });
 
-export default withRouter(
-  connect(mapStateToProps, { loginUser })(Login)
-);
+export default connect(mapStateToProps, { loginUser })(Login);
+
