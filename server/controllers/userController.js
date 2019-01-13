@@ -1,6 +1,3 @@
-const agenda = require('../agenda/agenda');
-require('../agenda/jobs')(agenda);
-
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
@@ -29,13 +26,12 @@ exports.register = (req, res) => {
         newUser.password = hash;
         newUser
           .save()
-          .then(() =>{
-            agenda.every('5 seconds', 'say hello')
+          .then(() =>
             res.status(200).json({
               success: true,
               message: 'User successfully registred'
             })
-           })
+           )
           .catch(() =>
             res.status(400).json({
               success: false,

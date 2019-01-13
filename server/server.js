@@ -9,7 +9,7 @@ require('./config/passport')(passport);
 const app = express();
 
 // connect Mongo
-const mongoDB = require('./config/keys').MongoDB;
+const { mongoDB } = require('./config/keys');
 mongoose
   .connect(
     mongoDB,

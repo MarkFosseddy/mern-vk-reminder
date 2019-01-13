@@ -101,7 +101,7 @@ class ReminderModal extends Component {
                   locale="ru"
                   showTimeSelect
                   timeFormat="HH:mm"
-                  timeIntervals={5}
+                  timeIntervals={1}
                   dateFormat="d MMM yyyy h:mm"
                   timeCaption="time"
                 />

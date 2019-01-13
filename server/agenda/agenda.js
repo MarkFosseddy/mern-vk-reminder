@@ -1,18 +1,14 @@
 const Agenda = require('agenda');
+const { mongoDB } = require('../config/keys');
 
-const mongoDB  = require('../config/keys').MongoDB;
-const connectionOpts = {
+const agenda = new Agenda({
   db: {
     address: mongoDB, 
     collection: 'agendaJobs',
     options: { useNewUrlParser: true }
   }
-};
+});
 
-const agenda = new Agenda(connectionOpts);
-
-(async function(){
-  await agenda.start();
-}())
+agenda.on('ready', () => agenda.start());
 
 module.exports = agenda;
