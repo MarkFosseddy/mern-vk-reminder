@@ -1,7 +1,7 @@
 const vk = require('./vk');
 
-const UserModel = require('../models/UserModel');
-const ReminderModel = require('../models/ReminderModel');
+const UserModel = require('../../models/UserModel');
+const ReminderModel = require('../../models/ReminderModel');
 
 module.exports = agenda => {
   agenda.define('send reminder', async job => {

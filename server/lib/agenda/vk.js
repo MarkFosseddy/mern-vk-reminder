@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { accessTokenVK } = require('../config/keys');
+const { accessTokenVK } = require('../../config/keys');
 const apiVersion = 5.92;
 
 const getRandomInt32 = () => Math.floor(Math.random() * (2147483647 - 1) + 1);

@@ -8,7 +8,8 @@ const ReminderSchema = new Schema({
   },
   text: {
     type: String,
-    required: true
+    required: true,
+    trim: true
   },
   whenToRemind: {
     type: Date,

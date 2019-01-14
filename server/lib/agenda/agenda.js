@@ -1,5 +1,5 @@
 const Agenda = require('agenda');
-const { mongoDB } = require('../config/keys');
+const { mongoDB } = require('../../config/keys');
 
 const agenda = new Agenda({
   db: {
