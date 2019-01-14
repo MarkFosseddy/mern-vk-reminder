@@ -18,7 +18,7 @@ const ReminderSchema = new Schema({
     type: Boolean,
     default: false
   },
-  date: {
+  date_created: {
     type: Date,
     default: Date.now
   }
