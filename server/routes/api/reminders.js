@@ -5,6 +5,7 @@ const passport = require('passport');
 const reminderController = require('../../controllers/reminderController');
 
 // @route   GET api/reminders/
+// @desc    get all reminders
 // @access  Private
 router.get(
   '/',
@@ -13,6 +14,7 @@ router.get(
 );
 
 // @route   POST api/reminders/
+// @desc    add reminder
 // @access  Private
 router.post(
   '/',
@@ -21,6 +23,7 @@ router.post(
 );
 
 // @route   PUT api/reminders/:id
+// @desc    update reminder
 // @access  Private
 router.put(
   '/:id',
@@ -29,6 +32,7 @@ router.put(
 );
 
 // @route   DELETE api/reminders/:id
+// @desc    delete reminder
 // @access  Private
 router.delete(
   '/:id',

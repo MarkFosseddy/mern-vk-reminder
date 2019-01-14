@@ -4,8 +4,10 @@ const jwt = require('jsonwebtoken');
 const UserModel = require('../models/UserModel');
 const secret = require('../config/keys').secretOrKey;
 
-exports.register = (req, res) => {
-  UserModel.findOne({ username: req.body.username }).then(user => {
+exports.register = async (req, res) => {
+  try {
+    const user = await UserModel
+      .findOne({ username: req.body.username });
     if (user) {
       return res.status(400).json({
         success: false,
@@ -24,27 +26,24 @@ exports.register = (req, res) => {
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
-        newUser
-          .save()
-          .then(() =>
-            res.status(200).json({
-              success: true,
-              message: 'User successfully registred'
-            })
-           )
-          .catch(() =>
-            res.status(400).json({
-              success: false,
-              message: 'Please fill all fields'
-            })
-          );
-      });
-    });
-  });
+        newUser.save();
+
+        return res.status(200).json({
+          success: true,
+          message: 'User successfully registered'
+        }); 
+      })
+    })
+
+  } catch (err) {
+    console.error(err);
+  }
 };
 
-exports.login = (req, res) => {
-  UserModel.findOne({ username: req.body.username }).then(user => {
+exports.login = async (req, res) => {
+  try {
+    const user = await UserModel
+      .findOne({ username: req.body.username });
     if (!user) {
       return res.status(400).json({
         success: false,
@@ -52,27 +51,26 @@ exports.login = (req, res) => {
       });
     }
 
-    bcrypt
-      .compare(req.body.password, user.password)
-      .then(() => {
-        const payload = {
-          id: user.id,
-          username: user.username,
-          vk: user.vk
-        };
-        jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) =>
-          res.status(200).json({
-            success: true,
-            message: 'You are successfully logged in',
-            jwtToken: `Bearer ${token}`
-          })
-        );
-      })
-      .catch(() =>
-        res.status(400).json({
-          success: false,
-          message: 'Incorrect password'
+    const isMatch = await bcrypt
+      .compare(req.body.password, user.password);
+
+    if (isMatch) {
+      const payload = {
+        id: user.id,
+        username: user.username,
+        vk: user.vk
+      };
+      jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) => {
+        if (err) throw err;
+        return res.status(200).json({
+          success: true,
+          message: 'You are successfully logged in',
+          jwtToken: `Bearer ${token}`
         })
-      );
-  });
+      });
+    }
+
+  } catch (err) {
+    console.error(err);
+  }
 };

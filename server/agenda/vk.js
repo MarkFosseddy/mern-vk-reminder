@@ -22,8 +22,8 @@ const getUserIdFromVKLink = VKLink =>
 const getUserIdFromUsername = async nameCase => {
   try {
     const res = await axios.get(`https://api.vk.com/method/users.get?name_case=${nameCase}&access_token=${accessTokenVK}&v=${apiVersion}`);
-    const id = await res.data.response[0].id;
-    return id;
+    
+    return res.data.response[0].id;
 
   } catch(err) {
     console.error(err);
@@ -43,7 +43,7 @@ const sendMessage = async (message, userId) => {
 exports.sendReminder = async (message, VKLink) => {
   try {
     const id = await getUserIdFromVKLink(VKLink);
-    await sendMessage(message, id);
+    sendMessage(message, id);
 
   } catch (err) {
     console.error(err);

@@ -11,12 +11,15 @@ const opts = {
 
 module.exports = passport =>
   passport.use(
-    new jwtStrategy(opts, (jwtPayload, done) => {
-      UserModel.findById(jwtPayload.id)
-        .then(user => {
-          if (user) return done(null, user);
-          return done(null, false);
-        })
-        .catch(err => done(err, false));
+    new jwtStrategy(opts, async (jwtPayload, done) => {
+      try {
+        const user = await UserModel.findById(jwtPayload.id);
+        if (user) return done(null, user);
+
+        return done(null, false);
+
+      } catch (err) {
+        return done(err, false);
+      } 
     })
   );
