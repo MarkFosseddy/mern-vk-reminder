@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
+const validateRegistration = require('../lib/validation/validateRegistration');
 const UserModel = require('../models/UserModel');
 const secret = require('../config/keys').secretOrKey;
 
@@ -8,12 +9,6 @@ exports.register = async (req, res) => {
   try {
     const user = await UserModel
       .findOne({ username: req.body.username });
-    if (user) {
-      return res.status(400).json({
-        success: false,
-        message: 'This username is already taken'
-      });
-    }
 
     const newUser = new UserModel({
       username: req.body.username,
@@ -21,17 +16,22 @@ exports.register = async (req, res) => {
       vk: req.body.vk
     });
 
+    let errors = [];
+    validateRegistration(user, newUser, errors);
+    if (errors.length > 0) {
+      return res.status(400).json(errors);
+    }
+
     bcrypt.genSalt(10, (err, salt) => {
       if (err) throw err;
       bcrypt.hash(newUser.password, salt, (err, hash) => {
         if (err) throw err;
         newUser.password = hash;
         newUser.save();
-
         return res.status(200).json({
-          success: true,
-          message: 'User successfully registered'
-        }); 
+            success: true,
+            message: 'User successfully registered'
+        });
       })
     })
 
