@@ -1,20 +1,20 @@
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-
 const validateRegistration = require('../lib/validation/validateRegistration');
+const { 
+  wrongPassword, 
+  wrongUsername
+} = require('../lib/validation/validateLogin');
 const UserModel = require('../models/UserModel');
-const secret = require('../config/keys').secretOrKey;
 
 exports.register = async (req, res) => {
   try {
-    const user = await UserModel
-      .findOne({ username: req.body.username });
+    const { username, password, vk } = req.body;
 
     const newUser = new UserModel({
-      username: req.body.username,
-      password: req.body.password,
-      vk: req.body.vk
+      username,
+      password,
+      vk
     });
+    const user = await UserModel.findOne({ username });
 
     let errors = [];
     validateRegistration(user, newUser, errors);
@@ -22,18 +22,11 @@ exports.register = async (req, res) => {
       return res.status(400).json(errors);
     }
 
-    bcrypt.genSalt(10, (err, salt) => {
-      if (err) throw err;
-      bcrypt.hash(newUser.password, salt, (err, hash) => {
-        if (err) throw err;
-        newUser.password = hash;
-        newUser.save();
-        return res.status(200).json({
-            success: true,
-            message: 'User successfully registered'
-        });
-      })
-    })
+    await newUser.encryptPassword();
+
+    return res.status(200).json({
+      msg: 'User successfully registered'
+    });
 
   } catch (err) {
     console.error(err);
@@ -42,33 +35,26 @@ exports.register = async (req, res) => {
 
 exports.login = async (req, res) => {
   try {
-    const user = await UserModel
-      .findOne({ username: req.body.username });
+    const { username, password } = req.body;
+    let errors = [];
+
+    const user = await UserModel.findOne({ username });
     if (!user) {
-      return res.status(400).json({
-        success: false,
-        message: 'User does not exist'
-      });
+      wrongUsername(errors);
+      return res.status(400).json(errors);
     }
 
-    const isMatch = await bcrypt
-      .compare(req.body.password, user.password);
-
-    if (isMatch) {
-      const payload = {
-        id: user.id,
-        username: user.username,
-        vk: user.vk
-      };
-      jwt.sign(payload, secret, { expiresIn: '1h' }, (err, token) => {
-        if (err) throw err;
-        return res.status(200).json({
-          success: true,
-          message: 'You are successfully logged in',
-          jwtToken: `Bearer ${token}`
-        })
-      });
+    const isMatch = await user.comparePasswords(password);
+    if (!isMatch) {
+      wrongPassword(errors);
+      return res.status(400).json(errors);
     }
+
+    const jwtToken = user.generateJwt();
+    return res.status(200).json({
+      msg: 'You are successfully logged in',
+      jwtToken: `Bearer ${jwtToken}`
+    });
 
   } catch (err) {
     console.error(err);
