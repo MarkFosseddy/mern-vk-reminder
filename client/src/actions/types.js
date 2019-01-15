@@ -7,3 +7,4 @@ export const DELETE_REMINDER = 'DELETE_REMINDER'
 export const UPDATE_REMINDER = 'UPDATE_REMINDER'
 
 export const GET_ERRORS = 'GET_ERRORS';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';
