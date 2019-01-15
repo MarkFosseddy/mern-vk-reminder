@@ -1,47 +1,55 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-import { LOGIN_USER, LOGOUT_USER, GET_ERRORS } from './types';
+import { LOGIN_USER, LOGOUT_USER, GET_ERRORS, CLEAR_ERRORS } from './types';
 import { setJwtToken, unsetJwtToken } from '../utils/jwtToken';
 
-export const registerUser = (newUser, pageRedirect) => (dispatch) => {
-  axios
-    .post('api/users/register', newUser)
-    .then(() => pageRedirect.push('/login'))
-    .catch(err => dispatch({
+export const registerUser = (newUser, pageRedirect) => async dispatch => {
+  try {
+    await axios.post('api/users/register', newUser);
+    pageRedirect.push('/login');
+
+  } catch (err) {
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({
       type: GET_ERRORS,
-      error: err.response.data.message,
-    }));
+      errors: err.response.data
+    });
+  }
 };
 
-export const loginUser = (credential, pageRedirect) => (dispatch) => {
-  axios
-    .post('api/users/login', credential)
-    .then((res) => {
-      const { jwtToken } = res.data;
-      localStorage.setItem('jwtToken', jwtToken);
+export const loginUser = (credentials, pageRedirect) => async dispatch => {
+  try {
+    const res = await axios.post('api/users/login', credentials);
 
-      setJwtToken(jwtToken);
+    const { jwtToken } = res.data;
+    localStorage.setItem('jwtToken', jwtToken);
+    setJwtToken(jwtToken);
 
-      const userData = jwtDecode(jwtToken);
-      dispatch({
-        type: LOGIN_USER,
-        user: userData,
-      });
+    const userData = jwtDecode(jwtToken);
+    dispatch({
+      type: LOGIN_USER,
+      user: userData,
+    });
 
-      pageRedirect.push('/dashboard');
-    })
-    .catch(err => console.error(err));
+    pageRedirect.push('/dashboard');
+
+  } catch (err) {
+    dispatch({ type: CLEAR_ERRORS });
+    dispatch({
+      type: GET_ERRORS,
+      errors: err.response.data
+    });
+  } 
 };
 
-export const logoutUser = pageRedirect => (dispatch) => {
+export const logoutUser = pageRedirect => dispatch => {
   localStorage.removeItem('jwtToken');
 
   unsetJwtToken();
 
-  dispatch({
-    type: LOGOUT_USER,
-  });
+  dispatch({ type: CLEAR_ERRORS });
+  dispatch({ type: LOGOUT_USER });
 
   pageRedirect.push('/login');
 };
