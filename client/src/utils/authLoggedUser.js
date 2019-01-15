@@ -4,7 +4,7 @@ import { LOGIN_USER, LOGOUT_USER } from '../actions/types';
 import { setJwtToken, unsetJwtToken } from './jwtToken';
 import store from '../store';
 
-export const authLoggedUser = jwtToken => {
+const authLoggedUser = jwtToken => {
   const userData = jwtDecode(jwtToken);
 
   const jwtTokenExpireTime = userData.exp;
@@ -14,6 +14,8 @@ export const authLoggedUser = jwtToken => {
     ? loginUser(userData, jwtToken)
     : logoutUser();
 };
+
+export default authLoggedUser;
 
 const loginUser = (userData, jwtToken) => {
   store.dispatch({
@@ -31,6 +33,4 @@ const logoutUser = () => {
   store.dispatch({
     type: LOGOUT_USER
   });
-
-  window.location.href = '/';
 };

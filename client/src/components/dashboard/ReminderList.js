@@ -12,10 +12,12 @@ class ReminderList extends Component {
     this.props.getReminders();
   }
   render() {
+    const { reminders } = this.props;
+
     return (
       <ListGroup>
         {
-          this.props.reminders.map(reminder => (
+          reminders.map(reminder => (
             <ReminderItem
               key={reminder._id}
               reminder={reminder}

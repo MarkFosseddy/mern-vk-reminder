@@ -33,6 +33,7 @@ const ReminderItem = ({ reminder, deleteReminder }) => (
               X
             </Button>
             <ReminderModal
+              method="update"
               text={reminder.text}
               whenToRemind={reminder.whenToRemind}
               id={reminder._id}

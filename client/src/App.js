@@ -11,7 +11,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import NotFound from './components/NotFound';
 import PrivateRoute from './components/PrivateRoute';
 
-import { authLoggedUser } from './utils/authLoggedUser';
+import authLoggedUser from './utils/authLoggedUser';
 
 import store from './store';
 
