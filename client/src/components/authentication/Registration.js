@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 
 import { registerUser } from '../../actions/authActions';
 
+import ErrorMsg from '../ErrorMsg';
+
 import { Button, Form, FormGroup, Input } from 'reactstrap';
 
 class Registration extends Component {
@@ -25,41 +27,51 @@ class Registration extends Component {
       password: this.state.password
     };
 
-    this.setState({
-      username: '',
-      vk: '',
-      password: ''
-    });
-
     this.props.registerUser(newUser, this.props.history);
   };
   render() {
+    const { errors } = this.props;
+    const { username, vk, password } = this.state;
+
     return (
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
           <Input
             placeholder="Username"
             name="username"
-            value={this.state.username}
+            value={username}
             onChange={this.onChange}
+          />
+          <ErrorMsg 
+            errors={errors}
+            type="username"
           />
         </FormGroup>
 
         <FormGroup>
           <Input
-            placeholder="VK link"
+            placeholder="VK link e.g. https://vk.com/markfosseddy"
             name="vk"
-            value={this.state.vk}
+            value={vk}
             onChange={this.onChange}
+          />
+          <ErrorMsg 
+            errors={errors}
+            type="vk"
           />
         </FormGroup>
 
         <FormGroup>
           <Input
+            type="password"
             placeholder="Password"
             name="password"
-            value={this.state.password}
+            value={password}
             onChange={this.onChange}
+          />
+          <ErrorMsg 
+            errors={errors}
+            type="password"
           />
         </FormGroup>
 
@@ -70,7 +82,7 @@ class Registration extends Component {
 }
 
 const mapStateToProps = state => ({
-  error: state.error
+  errors: state.error.errors
 });
 
 export default connect(mapStateToProps, { registerUser })(Registration);
