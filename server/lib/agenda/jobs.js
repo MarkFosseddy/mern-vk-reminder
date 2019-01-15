@@ -1,28 +1,25 @@
 const vk = require('./vk');
 
-const UserModel = require('../../models/UserModel');
-const ReminderModel = require('../../models/ReminderModel');
-
 module.exports = agenda => {
   agenda.define('send reminder', async job => {
     try {
-      const { data } = job.attrs;
+      const UserModel = require('../../models/UserModel');
+      const ReminderModel = require('../../models/ReminderModel');
       const {
         reminder_user_id,
         text,
         reminder_id
-      } = data;
+      } = job.attrs.data;
 
       const user = await UserModel
-        .findById(reminder_user_id);
+        .findOne({ _id: reminder_user_id });
       vk.sendReminder(text, user.vk);
 
       const reminder = await ReminderModel
-        .findById(reminder_id);
+        .findOne({ _id: reminder_id });
       reminder.isCompleted = true;
       reminder.save();
-
-      agenda.cancel({ data });
+      reminder.cancel();
 
     } catch (err) {
       console.error(err);

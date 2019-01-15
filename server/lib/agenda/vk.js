@@ -25,9 +25,9 @@ const getUserIdFromUsername = async username => {
 }
 
 const getUserIdFromVKLink = VKLink =>
-  parseVKLink(VKLink)
-    ? getUserId(VKLink)
-    : getUserIdFromUsername(getUsername(VKLink));
+  isNaN(parseVKLink(VKLink))
+    ? getUserIdFromUsername(getUsername(VKLink))
+    : getUserId(VKLink);
 
 const sendMessage = async (message, userId) => {
   try {
