@@ -1,8 +1,9 @@
-const validateRegistration = require('../lib/validation/validateRegistration');
+const validateRegistration = 
+  require('../lib/validation/user/validateRegistration');
 const { 
   wrongPassword, 
   wrongUsername
-} = require('../lib/validation/validateLogin');
+} = require('../lib/validation/user/validateLogin');
 const UserModel = require('../models/UserModel');
 
 exports.register = async (req, res) => {
