@@ -4,11 +4,8 @@ import { connect } from 'react-redux';
 import { deleteReminder } from '../../actions/reminderActions';
 import makeDateUserFriendly from '../../utils/makeDateUserFriendly';
 
-import ReminderModal from './modal/ReminderModal';
-
 import { 
   Button, 
-  ButtonGroup, 
   ListGroupItem, 
   Container, 
   Row, 
@@ -20,37 +17,23 @@ const ReminderItem = ({ reminder, deleteReminder }) => (
     <Container>
       <Row>
         <Col>
-          <span style={
+          <div style={
               reminder.isCompleted 
-                ? { textDecoration: 'line-through' }
+                ? { opacity: 0.6, textDecoration: 'line-through' }
                 : undefined
           }>
             {reminder.text}
-          </span>
-          <br />
-          <small>{makeDateUserFriendly(reminder.whenToRemind)}</small>
+            <br />
+            <small>{makeDateUserFriendly(reminder.whenToRemind)}</small>
+          </div>
         </Col>
         <Col xs="auto">
-          <ButtonGroup vertical>
-            <Button
-              onClick={() => deleteReminder(reminder._id)}
-              color="danger"
-            >
-              X
-            </Button>
-            { 
-              reminder.isCompleted 
-               ? ''
-               : <ReminderModal
-                    method="update"
-                    text={reminder.text}
-                    whenToRemind={reminder.whenToRemind}
-                    id={reminder._id}
-                 /> 
-            
-            }
-            
-          </ButtonGroup>
+          <Button
+            onClick={() => deleteReminder(reminder._id)}
+            color="danger"
+          >
+            X
+          </Button>
         </Col>
       </Row>
     </Container>

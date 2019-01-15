@@ -3,18 +3,18 @@ import { connect } from 'react-redux';
 import DatePicker, { registerLocale } from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 
-import { addReminder, updateReminder } from '../../../actions/reminderActions';
+import { addReminder } from '../../../actions/reminderActions';
 
-import CustomHeader from './CustomHeader';
-import CustomButton from './CustomButton';
 import ErrorMsg from  '../../ErrorMsg';
 
 import "react-datepicker/dist/react-datepicker.css";
 import {
   Modal,
   ModalBody,
+  ModalHeader,
   Form,
   FormGroup,
+  Button,
   Input
 } from 'reactstrap';
 
@@ -26,16 +26,6 @@ class ReminderModal extends Component {
     text: '',
     whenToRemind: new Date()
   };
-
-  componentDidMount() {
-    const { text, whenToRemind } = this.props;
-    if (text && whenToRemind) {
-      this.setState({
-        text,
-        whenToRemind: new Date(whenToRemind)
-      });
-    }
-  }
 
   toggle = () => {
     this.setState({ modal: !this.state.modal });
@@ -60,19 +50,14 @@ class ReminderModal extends Component {
       text: this.state.text,
       whenToRemind: this.state.whenToRemind
     };
+    
+    this.props.addReminder(newReminder);
 
-    const { method, addReminder, updateReminder, id } = this.props;
-    if (method === 'add') {
-      addReminder(newReminder);
-    } else {
-      updateReminder(id, newReminder);
-    }
-
-    this.toggle();
     this.setState({
       text: '',
       whenToRemind: new Date()
     });
+    this.toggle();
   }
 
   render() {
@@ -80,19 +65,21 @@ class ReminderModal extends Component {
 
     return (
       <div className="text-center mb-5">
-        <CustomButton
+        <Button  
           onClick={this.toggle}
-          method={this.props.method}
           color="info"
-        />
+          size="lg"
+        >
+          Создать напоминание
+        </Button>
+
         <Modal
           isOpen={this.state.modal}
           toggle={this.toggle}
         >
-          <CustomHeader
-            toggle={this.toggle}
-            method={this.props.method}
-          />
+          <ModalHeader toggle={this.toggle}>
+            Новое напоминание
+          </ModalHeader>
 
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
@@ -121,10 +108,7 @@ class ReminderModal extends Component {
                   timeCaption="время"
                 />
               </FormGroup>
-              <CustomButton
-                block={true}
-                method={this.props.method}
-              />
+              <Button block>Создать</Button>
             </Form>
           </ModalBody>
         </Modal>
@@ -137,7 +121,4 @@ const mapStateToProps = state => ({
   errors: state.error.errors
 });
 
-export default connect(
-  mapStateToProps,
-  { addReminder, updateReminder }
-)(ReminderModal);
+export default connect(mapStateToProps, { addReminder })(ReminderModal);

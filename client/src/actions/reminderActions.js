@@ -3,10 +3,7 @@ import axios from 'axios';
 import {
   GET_REMINDERS,
   ADD_REMINDER,
-  DELETE_REMINDER,
-  UPDATE_REMINDER,
-  GET_ERRORS,
-  CLEAR_ERRORS
+  DELETE_REMINDER
 } from './types';
 
 export const getReminders = () => async dispatch => {
@@ -31,28 +28,7 @@ export const addReminder = newReminder => async dispatch => {
     });
 
   } catch (err) {
-    dispatch({ type: CLEAR_ERRORS });
-    dispatch({
-      type: GET_ERRORS,
-      errors: err.response.data
-    });
-  }
-};
-
-export const updateReminder = (id, updatedReminder) => async dispatch => {
-  try {
-    const res = await axios.put(`/api/reminders/${id}`, updatedReminder)
-    dispatch({
-      type: UPDATE_REMINDER,
-      updatedReminder: res.data
-    });
-
-  } catch (err) {
-    dispatch({ type: CLEAR_ERRORS });
-    dispatch({
-      type: GET_ERRORS,
-      errors: err.response.data
-    });
+    console.error(err);
   }
 };
 

@@ -25,15 +25,17 @@ const ReminderSchema = new Schema({
 }, { timestamps: true });
 
 ReminderSchema.methods.schedule = function() {
-  agenda.schedule(
-    this.whenToRemind, 
-    'send reminder', 
-    { 
-      reminder_id: this._id,
-      text: this.text,
-      reminder_user_id: this.user_id
-    }
-  );
+  if (!this.isCompleted) {
+    agenda.schedule(
+      this.whenToRemind, 
+      'send reminder', 
+      { 
+        reminder_id: this._id,
+        text: this.text,
+        reminder_user_id: this.user_id
+      }
+    );
+  }
 };
 
 ReminderSchema.methods.cancel = function() {

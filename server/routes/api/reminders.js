@@ -22,15 +22,6 @@ router.post(
   reminderController.addReminder
 );
 
-// @route   PUT api/reminders/:id
-// @desc    update reminder
-// @access  Private
-router.put(
-  '/:id',
-  passport.authenticate('jwt', { session: false }),
-  reminderController.updateReminder
-);
-
 // @route   DELETE api/reminders/:id
 // @desc    delete reminder
 // @access  Private

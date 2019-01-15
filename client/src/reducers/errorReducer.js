@@ -1,6 +1,8 @@
 import { GET_ERRORS, CLEAR_ERRORS } from '../actions/types';
 
-const initialState = {};
+const initialState = {
+  errors: []
+};
 
 const errorReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -11,7 +13,10 @@ const errorReducer = (state = initialState, action) => {
       };
 
     case CLEAR_ERRORS:
-      return {}
+      return {
+        ...state,
+        errors: []
+      };
 
     default:
       return state;

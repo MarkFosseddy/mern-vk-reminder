@@ -1,7 +1,12 @@
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-import { LOGIN_USER, LOGOUT_USER, GET_ERRORS, CLEAR_ERRORS } from './types';
+import { 
+  LOGIN_USER, 
+  LOGOUT_USER, 
+  GET_ERRORS, 
+  CLEAR_ERRORS 
+} from './types';
 import { setJwtToken, unsetJwtToken } from '../utils/jwtToken';
 
 export const registerUser = (newUser, pageRedirect) => async dispatch => {
@@ -10,7 +15,7 @@ export const registerUser = (newUser, pageRedirect) => async dispatch => {
     pageRedirect.push('/login');
 
   } catch (err) {
-    dispatch({ type: CLEAR_ERRORS });
+    dispatch(clearErrors());
     dispatch({
       type: GET_ERRORS,
       errors: err.response.data
@@ -35,7 +40,7 @@ export const loginUser = (credentials, pageRedirect) => async dispatch => {
     pageRedirect.push('/dashboard');
 
   } catch (err) {
-    dispatch({ type: CLEAR_ERRORS });
+    dispatch(clearErrors());
     dispatch({
       type: GET_ERRORS,
       errors: err.response.data
@@ -48,7 +53,7 @@ export const logoutUser = pageRedirect => dispatch => {
 
   unsetJwtToken();
 
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
   dispatch({ type: LOGOUT_USER });
 
   pageRedirect.push('/login');

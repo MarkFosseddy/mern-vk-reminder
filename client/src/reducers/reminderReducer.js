@@ -1,8 +1,7 @@
 import {
   GET_REMINDERS,
   ADD_REMINDER,
-  DELETE_REMINDER,
-  UPDATE_REMINDER
+  DELETE_REMINDER
 } from '../actions/types';
 
 const initialState = {
@@ -29,20 +28,6 @@ const reminderReducer = (state = initialState, action) => {
       return {
         ...state,
         reminders
-      };
-
-    case UPDATE_REMINDER:
-      const index =
-        state.reminders
-          .findIndex(reminder => reminder._id === action.updatedReminder._id);
-
-      return {
-        ...state,
-        reminders: [
-          ...state.reminders.slice(0, index),
-          action.updatedReminder,
-          ...state.reminders.slice(index + 1)
-        ]
       };
 
     default:

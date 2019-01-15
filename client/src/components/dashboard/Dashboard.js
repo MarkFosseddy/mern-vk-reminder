@@ -9,7 +9,7 @@ const Dashboard = ({ user }) => (
     <h1 className="text-center mb-5">
       Привет, {user.username}
     </h1>
-    <ReminderModal method="add" />
+    <ReminderModal />
     <ReminderList />
   </div>
 );

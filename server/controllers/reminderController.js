@@ -38,36 +38,6 @@ exports.addReminder = (req, res) => {
   }
 };
 
-exports.updateReminder = async (req, res) => {
-  try {
-    const data = {
-      text: req.body.text,
-      whenToRemind: req.body.whenToRemind
-    };
-    let errors = [];
-    validateReminder(data, errors);
-    if (errors.lenght > 0) {
-      return res.status(400).json(errors);
-    }
-
-    const reminder = await ReminderModel
-      .findOne({ _id: req.params.id });
-
-    reminder.cancel();
-
-    reminder.text = req.body.text;
-    reminder.whenToRemind = req.body.whenToRemind;
-    reminder.save();
-
-    reminder.schedule();
-
-    return res.status(200).json(reminder);
-
-  } catch (err) {
-    console.error(err);
-  }
-};
-
 exports.deleteReminder = async (req, res) => {
   try {
     const reminder = await ReminderModel
