@@ -1,21 +1,16 @@
-const agenda = require('../agenda/agenda');
-require('../agenda/jobs')(agenda);
-
+const validateReminder = require('../lib/validation/reminder/validateReminder');
 const ReminderModel = require('../models/ReminderModel');
 
 exports.getReminders = async (req, res) => {
   try {
     const reminders = await ReminderModel
       .find({ user_id: req.user.id })
-      .sort({ date: -1 });
+      .sort({ createdAt: -1 });
     
     return res.status(200).json(reminders);
 
-  } catch {
-    return res.status(404).json({
-      success: false,
-      message: 'Something went wrong'
-    })
+  } catch (err) {
+    console.error(err);
   }
 };
 
@@ -27,18 +22,15 @@ exports.addReminder = (req, res) => {
       whenToRemind: req.body.whenToRemind
     });
 
+    let errors = [];
+    validateReminder(newReminder, errors);
+    if (errors.length > 0) {
+      return res.status(400).json(errors);
+    }
+
     newReminder.save();
-
-    agenda.schedule(
-      newReminder.whenToRemind, 
-      'send reminder', 
-      { 
-        reminder_id: newReminder._id,
-        text: newReminder.text,
-        reminder_user_id: newReminder.user_id
-      }
-    );
-
+    newReminder.schedule();
+    
     return res.status(200).json(newReminder)
 
   } catch (err) {
@@ -48,28 +40,26 @@ exports.addReminder = (req, res) => {
 
 exports.updateReminder = async (req, res) => {
   try {
-    const reminder = await ReminderModel.findOne({ _id: req.params.id });
-
-    const reminderData = {
-      reminder_id: reminder._id,
-      text: reminder.text,
-      reminder_user_id: reminder.user_id
+    const data = {
+      text: req.body.text,
+      whenToRemind: req.body.whenToRemind
     };
-    agenda.cancel({ data: reminderData });
+    let errors = [];
+    validateReminder(data, errors);
+    if (errors.lenght > 0) {
+      return res.status(400).json(errors);
+    }
+
+    const reminder = await ReminderModel
+      .findOne({ _id: req.params.id });
+
+    reminder.cancel();
 
     reminder.text = req.body.text;
     reminder.whenToRemind = req.body.whenToRemind;
     reminder.save();
 
-    agenda.schedule(
-      reminder.whenToRemind, 
-      'send reminder', 
-      { 
-        reminder_id: reminder._id,
-        text: reminder.text,
-        reminder_user_id: reminder.user_id
-      }
-    );
+    reminder.schedule();
 
     return res.status(200).json(reminder);
 
@@ -82,19 +72,12 @@ exports.deleteReminder = async (req, res) => {
   try {
     const reminder = await ReminderModel
       .findOne({ _id: req.params.id });
-
-    const reminderData = {
-      reminder_id: reminder._id,
-      text: reminder.text,
-      reminder_user_id: reminder.user_id
-    };
-
+      
+    reminder.cancel();
     reminder.remove();
-    agenda.cancel({ data: reminderData });
 
     return res.status(200).json({
-      success: true,
-      message: 'Reminder successfully removed'
+      msg: 'Reminder successfully removed'
     });
 
   } catch (err) {
