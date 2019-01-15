@@ -15,5 +15,4 @@ const ErrorMsg = ({ errors, type  }) => (
     </>
 );
 
-
 export default ErrorMsg;

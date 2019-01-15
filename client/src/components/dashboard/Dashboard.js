@@ -7,9 +7,9 @@ import ReminderModal from './modal/ReminderModal';
 const Dashboard = ({ user }) => (
   <div>
     <h1 className="text-center mb-5">
-      Hello, {user.username}
+      Привет, {user.username}
     </h1>
-    <ReminderModal method="add"/>
+    <ReminderModal method="add" />
     <ReminderList />
   </div>
 );

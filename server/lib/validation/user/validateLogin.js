@@ -2,12 +2,12 @@ exports.wrongUsername = errors =>
   errors.push({ 
     id: 0,
     type: 'username', 
-    msg: 'User does not exist' 
+    msg: 'Имя пользователя не существует' 
   });
 
 exports.wrongPassword = errors =>
   errors.push({ 
     id: 0,
     type: 'password', 
-    msg: 'Wrong password' 
+    msg: 'Неверный пароль' 
   });

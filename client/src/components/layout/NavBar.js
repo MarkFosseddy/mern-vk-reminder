@@ -16,7 +16,7 @@ const NavBar = ({ isAuthenticated, logoutUser, history }) => {
       <Nav className="ml-auto">
         <NavItem>
           <Link to="/dashboard" className="btn btn-link">
-            Dashboard
+            Напоминания
           </Link>
         </NavItem>
         <NavItem>
@@ -24,7 +24,7 @@ const NavBar = ({ isAuthenticated, logoutUser, history }) => {
             onClick={() => logoutUser(history)}
             color="link"
           >
-            Logout
+            Выход
           </Button>
         </NavItem>
       </Nav>
@@ -39,12 +39,12 @@ const NavBar = ({ isAuthenticated, logoutUser, history }) => {
       <Nav className="ml-auto">
         <NavItem>
           <Link to="/login" className="btn btn-link">
-            Login
+            Вход
           </Link>
         </NavItem>
         <NavItem>
           <Link to="/register" className="btn btn-link">
-            Register
+            Регистрация
           </Link>
         </NavItem>
       </Nav>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { loginUser } from '../../actions/authActions';
+import { loginUser, clearErrors } from '../../actions/authActions';
 
 import ErrorMsg from '../ErrorMsg';
 
@@ -12,6 +12,10 @@ class Login extends Component {
     username: '',
     password: ''
   };
+
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
 
   onChange = event => {
     this.setState({ [ event.target.name ]: event.target.value });
@@ -36,7 +40,7 @@ class Login extends Component {
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
           <Input
-            placeholder="Username"
+            placeholder="Имя пользователя"
             name="username"
             value={username}
             onChange={this.onChange}
@@ -48,9 +52,9 @@ class Login extends Component {
         </FormGroup>
         <FormGroup>
           <Input
-            type="password"
-            placeholder="Password"
+            placeholder="Пароль"
             name="password"
+            type="password"
             value={password}
             onChange={this.onChange}
           />
@@ -60,7 +64,7 @@ class Login extends Component {
           />
         </FormGroup>
 
-        <Button color="success" block>Login</Button>
+        <Button color="success" block>Вход</Button>
       </Form>
     );
   }
@@ -71,5 +75,8 @@ const mapStateToProps = state => ({
   errors: state.error.errors
 });
 
-export default connect(mapStateToProps, { loginUser })(Login);
+export default connect(
+  mapStateToProps, 
+  { loginUser, clearErrors }
+)(Login);
 

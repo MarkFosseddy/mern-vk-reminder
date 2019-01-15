@@ -20,7 +20,13 @@ const ReminderItem = ({ reminder, deleteReminder }) => (
     <Container>
       <Row>
         <Col>
-          {reminder.text}
+          <span style={
+              reminder.isCompleted 
+                ? { textDecoration: 'line-through' }
+                : undefined
+          }>
+            {reminder.text}
+          </span>
           <br />
           <small>{makeDateUserFriendly(reminder.whenToRemind)}</small>
         </Col>
@@ -32,12 +38,18 @@ const ReminderItem = ({ reminder, deleteReminder }) => (
             >
               X
             </Button>
-            <ReminderModal
-              method="update"
-              text={reminder.text}
-              whenToRemind={reminder.whenToRemind}
-              id={reminder._id}
-            />
+            { 
+              reminder.isCompleted 
+               ? ''
+               : <ReminderModal
+                    method="update"
+                    text={reminder.text}
+                    whenToRemind={reminder.whenToRemind}
+                    id={reminder._id}
+                 /> 
+            
+            }
+            
           </ButtonGroup>
         </Col>
       </Row>

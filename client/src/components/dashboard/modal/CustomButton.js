@@ -8,7 +8,7 @@ const CustomButton = ({ method, block, onClick, color }) => (
     color={color}
     onClick={onClick}
   >
-    {method === 'add' ? 'Add Reminder' : 'Update'}
+    {method === 'add' ? 'Создать' : 'Изменить'}
   </Button>
 );
 

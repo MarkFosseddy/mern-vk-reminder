@@ -4,7 +4,7 @@ import { ModalHeader } from 'reactstrap';
 
 const CustomHeader = ({ toggle, method }) => (
   <ModalHeader toggle={toggle}>
-    {method === 'add' ? 'Add New Reminder' : 'Update Reminder'}
+    {method === 'add' ? 'Новое напоминание' : 'Изменить напоминание'}
   </ModalHeader>
 );
 

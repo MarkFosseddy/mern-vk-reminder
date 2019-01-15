@@ -53,3 +53,7 @@ export const logoutUser = pageRedirect => dispatch => {
 
   pageRedirect.push('/login');
 };
+
+export const clearErrors = () => dispatch => {
+  dispatch({ type: CLEAR_ERRORS });
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-import { registerUser } from '../../actions/authActions';
+import { registerUser, clearErrors } from '../../actions/authActions';
 
 import ErrorMsg from '../ErrorMsg';
 
@@ -13,6 +13,10 @@ class Registration extends Component {
     vk: '',
     password: ''
   };
+
+  componentWillUnmount() {
+    this.props.clearErrors();
+  }
 
   onChange = event => {
     this.setState({ [ event.target.name ]: event.target.value });
@@ -37,7 +41,7 @@ class Registration extends Component {
       <Form onSubmit={this.onSubmit}>
         <FormGroup>
           <Input
-            placeholder="Username"
+            placeholder="Имя пользователя"
             name="username"
             value={username}
             onChange={this.onChange}
@@ -50,7 +54,7 @@ class Registration extends Component {
 
         <FormGroup>
           <Input
-            placeholder="VK link e.g. https://vk.com/markfosseddy"
+            placeholder="Ссылка ВКонтакте. Например: https://vk.com/markfosseddy"
             name="vk"
             value={vk}
             onChange={this.onChange}
@@ -63,9 +67,9 @@ class Registration extends Component {
 
         <FormGroup>
           <Input
-            type="password"
-            placeholder="Password"
+            placeholder="Пароль"
             name="password"
+            type="password"
             value={password}
             onChange={this.onChange}
           />
@@ -75,7 +79,7 @@ class Registration extends Component {
           />
         </FormGroup>
 
-        <Button color="primary" block>Register</Button>
+        <Button color="primary" block>Регистрация</Button>
       </Form>
     );
   }
@@ -85,4 +89,7 @@ const mapStateToProps = state => ({
   errors: state.error.errors
 });
 
-export default connect(mapStateToProps, { registerUser })(Registration);
+export default connect(
+  mapStateToProps, 
+  { registerUser, clearErrors }
+)(Registration);

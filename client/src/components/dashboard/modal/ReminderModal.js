@@ -7,7 +7,7 @@ import { addReminder, updateReminder } from '../../../actions/reminderActions';
 
 import CustomHeader from './CustomHeader';
 import CustomButton from './CustomButton';
-
+import ErrorMsg from  '../../ErrorMsg';
 
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -52,6 +52,10 @@ class ReminderModal extends Component {
   onSubmit = event => {
     event.preventDefault();
 
+    if (this.state.text.trim() === '') {
+      return;
+    }
+
     const newReminder = {
       text: this.state.text,
       whenToRemind: this.state.whenToRemind
@@ -65,9 +69,15 @@ class ReminderModal extends Component {
     }
 
     this.toggle();
+    this.setState({
+      text: '',
+      whenToRemind: new Date()
+    });
   }
 
   render() {
+    const { errors } = this.props;
+
     return (
       <div className="text-center mb-5">
         <CustomButton
@@ -88,22 +98,27 @@ class ReminderModal extends Component {
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
                 <Input
-                  placeholder="Text"
+                  placeholder="Напоминание"
                   name="text"
                   value={this.state.text}
                   onChange={this.onChange}
                 />
+                <ErrorMsg 
+                  errors={errors}
+                  type="text"
+                />
               </FormGroup>
               <FormGroup>
                 <DatePicker
+                  inline
                   selected={this.state.whenToRemind}
                   onChange={this.onDatePickerChange}
                   locale="ru"
                   showTimeSelect
                   timeFormat="HH:mm"
-                  timeIntervals={1}
-                  dateFormat="d MMM yyyy h:mm"
-                  timeCaption="time"
+                  timeIntervals={5}
+                  dateFormat="d MMM yyyy hh:mm "
+                  timeCaption="время"
                 />
               </FormGroup>
               <CustomButton
@@ -118,5 +133,11 @@ class ReminderModal extends Component {
   }
 }
 
+const mapStateToProps = state => ({
+  errors: state.error.errors
+});
 
-export default connect(null, { addReminder, updateReminder })(ReminderModal);
+export default connect(
+  mapStateToProps,
+  { addReminder, updateReminder }
+)(ReminderModal);

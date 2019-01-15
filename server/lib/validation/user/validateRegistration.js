@@ -4,35 +4,35 @@ module.exports = validateRegistration = (user = {}, credentials, errors) => {
     errors.push({ 
       id: id++, 
       type: 'username', 
-      msg:'Username is already taken' 
+      msg:'Имя пользователя уже существует' 
     });
   }
   if (credentials.username.length < 4) {
     errors.push({ 
       id: id++, 
       type: 'username', 
-      msg:'Username must be at least 4 characters' 
+      msg:'Имя пользователя должно состоять минимум из 4-х символов' 
     });
   }
   if (credentials.username.trim() === '') {
     errors.push({ 
       id: id++, 
       type: 'username', 
-      msg:'Username must not be empty' 
+      msg:'Введите имя пользователя' 
     });
   }
   if (credentials.password.trim() === '') {
     errors.push({ 
       id: id++, 
       type: 'password', 
-      msg:'Password must not be empty' 
+      msg:'Введите пароль' 
     });
   }
   if (credentials.password.length < 4) {
     errors.push({ 
       id: id++, 
-      type: 'username', 
-      msg:'Password must be at least 4 characters' 
+      type: 'password', 
+      msg:'Пароль должен состоять минимум из 4-х символов' 
     });
   }
   if (
@@ -42,14 +42,14 @@ module.exports = validateRegistration = (user = {}, credentials, errors) => {
     errors.push({ 
       id: id++, 
       type: 'vk', 
-      msg:'Link must be valid' 
+      msg:'Ссылка должна быть в виде https://vk.com/' 
     });
   }
   if (credentials.vk.trim() === '') {
     errors.push({ 
       id: id++, 
       type: 'vk', 
-      msg:'Link must not be empty' 
+      msg:'Введите ссылку' 
     });
   }
 };
