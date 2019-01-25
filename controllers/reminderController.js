@@ -1,7 +1,7 @@
 const validateReminder = require('../lib/validation/reminder/validateReminder');
 const ReminderModel = require('../models/ReminderModel');
 
-exports.getReminders = async (req, res) => {
+exports.getAll = async (req, res) => {
   try {
     const reminders = await ReminderModel
       .find({ user_id: req.user.id })
@@ -14,7 +14,7 @@ exports.getReminders = async (req, res) => {
   }
 };
 
-exports.addReminder = (req, res) => {
+exports.add = (req, res) => {
   try {
     const newReminder = new ReminderModel({
       user_id: req.user.id,
@@ -38,7 +38,7 @@ exports.addReminder = (req, res) => {
   }
 };
 
-exports.deleteReminder = async (req, res) => {
+exports.delete = async (req, res) => {
   try {
     const reminder = await ReminderModel
       .findOne({ _id: req.params.id });
