@@ -10,7 +10,7 @@ const reminderController = require('../../controllers/reminderController');
 router.get(
   '/',
   passport.authenticate('jwt', { session: false }),
-  reminderController.getReminders
+  reminderController.getAll
 );
 
 // @route   POST api/reminders/
@@ -19,7 +19,7 @@ router.get(
 router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
-  reminderController.addReminder
+  reminderController.add
 );
 
 // @route   DELETE api/reminders/:id
@@ -28,7 +28,7 @@ router.post(
 router.delete(
   '/:id',
   passport.authenticate('jwt', { session: false }),
-  reminderController.deleteReminder
+  reminderController.delete
 );
 
 module.exports = router;
