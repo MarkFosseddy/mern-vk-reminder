@@ -11,4 +11,4 @@
 - Redux
 
 
-https://infinite-wave-56422.herokuapp.com/
+https://vk-reminder.herokuapp.com/
