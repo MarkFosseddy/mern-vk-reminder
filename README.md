@@ -10,5 +10,5 @@
 - React 
 - Redux
 
-
+(не работает, если закрыты личные сообщения)
 https://vk-reminder.herokuapp.com/
