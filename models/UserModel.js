@@ -41,8 +41,7 @@ UserSchema.methods.encryptPassword =
 UserSchema.methods.comparePasswords = 
   async function(password) {
     try {
-      const isMatch = await bcrypt.compare(password, this.password);
-      return isMatch;
+      return await bcrypt.compare(password, this.password);
 
     } catch (err) {
       console.error(err);
