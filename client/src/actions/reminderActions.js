@@ -24,7 +24,7 @@ export const addReminder = newReminder => async dispatch => {
     const res = await axios.post('/api/reminders', newReminder)
     dispatch({
       type: ADD_REMINDER,
-      newReminder: res.data,
+      newReminder: res.data
     });
 
   } catch (err) {

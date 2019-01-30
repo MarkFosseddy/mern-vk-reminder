@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export const setJwtToken = (jwtToken) => {
+export const setJwtToken = jwtToken => {
   axios.defaults.headers.common.Authorization = jwtToken;
 };
 

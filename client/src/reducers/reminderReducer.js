@@ -5,7 +5,7 @@ import {
 } from '../actions/types';
 
 const initialState = {
-  reminders: [],
+  reminders: []
 };
 
 const reminderReducer = (state = initialState, action) => {
@@ -13,13 +13,13 @@ const reminderReducer = (state = initialState, action) => {
     case GET_REMINDERS:
       return {
         ...state,
-        reminders: action.reminders,
+        reminders: action.reminders
       };
 
     case ADD_REMINDER:
       return {
         ...state,
-        reminders: [ action.newReminder, ...state.reminders ],
+        reminders: [action.newReminder, ...state.reminders]
       };
 
     case DELETE_REMINDER:

@@ -34,7 +34,7 @@ export const loginUser = (credentials, pageRedirect) => async dispatch => {
     const userData = jwtDecode(jwtToken);
     dispatch({
       type: LOGIN_USER,
-      user: userData,
+      user: userData
     });
 
     pageRedirect.push('/dashboard');
