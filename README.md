@@ -9,3 +9,6 @@
 **Client**
 - React 
 - Redux
+
+(не работает, если закрыты личные сообщения) <br>
+https://vk-reminder.herokuapp.com/
